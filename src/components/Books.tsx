@@ -1,14 +1,19 @@
 import { Table, Row, Col, Tooltip, User, Text } from "@nextui-org/react";
-
-import { EditIcon } from "./tableHeaders/EditIcon";
-import { IconButton } from "./tableHeaders/IconButton";
-
+import Link from "next/link";
 
 export default function books() {
   const columns1 = [
-      { name: "Cover", uid: "cover" },  { name: "Title", uid: "title" },  { name: "Author", uid: "author" },  { name: "Avarage rating", uid: "Avarage rating" },  { name: "Rating", uid: "Rating" },  { name: "Shelves", uid: "Shelves" },  { name: "Review", uid: "Review" },  { name: "Date read", uid: "Date read" },  { name: "Date added", uid: "Date added" },{ name: "ACTIONS", uid: "actions" },
-
-];
+    { name: "Cover", uid: "cover" },
+    { name: "Title", uid: "title" },
+    { name: "Author", uid: "author" },
+    { name: "Avarage rating", uid: "Avarage rating" },
+    { name: "Rating", uid: "Rating" },
+    { name: "Shelves", uid: "Shelves" },
+    { name: "Review", uid: "Review" },
+    { name: "Date read", uid: "Date read" },
+    { name: "Date added", uid: "Date added" },
+    { name: "ACTIONS", uid: "actions" },
+  ];
   const users1 = [
     {
       id: 3,
@@ -20,7 +25,7 @@ export default function books() {
       Shelves: "Read",
       Review: "A must-read for everyone!",
       "Date read": "2022-03-01",
-      "Date added": "2021-10-01"
+      "Date added": "2021-10-01",
     },
     {
       id: 4,
@@ -32,7 +37,7 @@ export default function books() {
       Shelves: "Read",
       Review: "A classic romance novel!",
       "Date read": "2022-04-01",
-      "Date added": "2021-09-01"
+      "Date added": "2021-09-01",
     },
     {
       id: 5,
@@ -44,7 +49,7 @@ export default function books() {
       Shelves: "Read",
       Review: "Not my favorite book, but still worth reading.",
       "Date read": "2022-05-01",
-      "Date added": "2021-08-01"
+      "Date added": "2021-08-01",
     },
     {
       id: 6,
@@ -56,31 +61,31 @@ export default function books() {
       Shelves: "Currently Reading",
       Review: "A fantastic adventure!",
       "Date read": "",
-      "Date added": "2022-03-15"
+      "Date added": "2022-03-15",
     },
   ];
-  
-  const renderCell = (user:any, columnKey:any) => {
+
+  const renderCell = (user: any, columnKey: any) => {
     const cellValue = user[columnKey];
     switch (columnKey) {
       case "cover":
         console.log("cover");
-        return  <img src={user.cover} alt="cover" width="100" height="150" />;
+        return <img src={user.cover} alt="cover" width="100" height="150" />;
       case "Avarage rating":
         return parseFloat(cellValue).toFixed(2);
-        case "actions":
+      case "actions":
         return (
           <div>
-           <button>
-             <h2>Edit</h2>
-           </button>
+            <Link href="/user/modifyBook">
+              <h2>Edit</h2>
+            </Link>
           </div>
         );
       default:
         return cellValue;
     }
   };
-  
+
   return (
     <Table
       aria-label="Example table with custom cells"

@@ -3,7 +3,7 @@ import { useState } from "react";
 import {Create_Book_Mutation} from '../utils/mutation'
 import {ReadingStatus} from '../constants/data'
 import client from "../apollo-client";
-import { blob } from "stream/consumers";
+
 
 export default function NewBook() {
   const [collection, setCollection] = useState(ReadingStatus);
