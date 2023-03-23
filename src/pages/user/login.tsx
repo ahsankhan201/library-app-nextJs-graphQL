@@ -1,14 +1,15 @@
 import { useCallback, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import client from "../../../src/apollo-client";
 import { LOGIN_MUTATION } from "../../utils/mutation";
 import styles from "@/styles/Register.module.css";
+import Cookies from "js-cookie";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [authenticated, setAuthenticated] = useState(false);
 
   const handleSubmit = useCallback(async () => {
     try {
@@ -19,8 +20,13 @@ export default function LoginPage() {
         },
       });
       console.log(data.login);
+      setAuthenticated(true);
+      // set the user information
+      Cookies.set("user", JSON.stringify(data));
+      Cookies.set("session_token", data.login.sessionToken);
     } catch (error) {
       console.error(error);
+      setAuthenticated(false);
     }
   }, [email, password]);
 
@@ -32,7 +38,11 @@ export default function LoginPage() {
     [handleSubmit]
   );
 
- return (
+  if (authenticated) {
+    return <Link href="/"></Link>;
+  }
+
+  return (
     <>
       <Head>
         <title>Login | Goodreads Clone</title>
@@ -49,6 +59,12 @@ export default function LoginPage() {
               >
                 Email
               </label>
+              <img
+                src="https://ab33-124-109-45-157.au.ngrok.io/graphql/upload/1679569604609.png"
+                alt=""
+                width={200}
+                height={200}
+              />
               <input
                 type="email"
                 id="email"
@@ -59,15 +75,14 @@ export default function LoginPage() {
               />
             </div>
             <div className="mb-4">
-             <div className="mb-2 flex justify-between items-center">
-             <label
-                htmlFor="password"
-                className="text-gray-700 font-bold"
-              >
-                Password
-              </label>
-              <a href="#" className="underline">Forgot your password?</a>
-             </div>
+              <div className="mb-2 flex justify-between items-center">
+                <label htmlFor="password" className="text-gray-700 font-bold">
+                  Password
+                </label>
+                <a href="#" className="underline">
+                  Forgot your password?
+                </a>
+              </div>
               <input
                 type="password"
                 id="password"
@@ -85,15 +100,15 @@ export default function LoginPage() {
             </button>
           </form>
           <div>
-          <div
-           className={styles.divider}
-           >
-          <p className="mt-4 z-10 px-2 text-center">
-            Don't have an account?{" "}
-          </p>
-          </div>
+            <div className={styles.divider}>
+              <p className="mt-4 z-10 px-2 text-center">
+                Don't have an account?{" "}
+              </p>
+            </div>
             <Link href="/user/register">
-              <button className="w-full bg-blue-500 h-9 text-white py-2 px-4 rounded-3xl hover:bg-blue-600">Sign Up</button>
+              <button className="w-full bg-blue-500 h-9 text-white py-2 px-4 rounded-3xl hover:bg-blue-600">
+                Sign Up
+              </button>
             </Link>
           </div>
         </div>
@@ -101,4 +116,3 @@ export default function LoginPage() {
     </>
   );
 }
-

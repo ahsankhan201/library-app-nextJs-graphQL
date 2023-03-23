@@ -37,4 +37,16 @@ mutation Mutation($book: BookInput!) {
 }
 `
 
+export const Get_All_Books_Query=gql`
+query Query {
+  books {
+    _id
+    author
+    cover_Image
+    date
+    title
+  }
+}
+`
+
 

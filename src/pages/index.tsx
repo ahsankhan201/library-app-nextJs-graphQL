@@ -6,10 +6,18 @@ import NewBook from "./newBook";
 import Navbar from "@/components/navBar/NavBar";
 import Books from "@/components/Books";
 import ViewBooks from "./user/viewBooks";
+import { useEffect } from "react";
+import Cookies from "js-cookie";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  useEffect(() => {
+    console.log("hello");
+
+    console.log(Cookies.get("user"));
+  });
+
   return (
     <>
       <Head>
