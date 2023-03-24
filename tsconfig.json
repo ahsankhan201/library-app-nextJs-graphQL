@@ -6,6 +6,7 @@
     "skipLibCheck": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -15,9 +16,10 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./src/*"]
+      // include all the file inside the src and also include components and pages
+      "@/*": ["./src/*", "./src/components/*", "./src/pages/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/jest.config.js", "src/__test__/index.test.ts", "src/jest.setup.js", "src/__test__/login.test.tsx", "src/__test__/login.test.tsx"],
   "exclude": ["node_modules"]
 }

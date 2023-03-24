@@ -90,8 +90,8 @@ export default function books() {
     <Table
       aria-label="Example table with custom cells"
       css={{
-        height: "auto",
-        minWidth: "100%",
+        height: "700px",
+        minWidth: "70%",
       }}
       selectionMode="none"
     >

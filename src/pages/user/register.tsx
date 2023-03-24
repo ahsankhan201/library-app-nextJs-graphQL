@@ -3,8 +3,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import client from "../../../src/apollo-client";
-import { Register_MUTATION } from "../../utils/mutation";
-import { Button } from "@nextui-org/react";
+import { Register_MUTATION } from "@/services/query/user";
+
 
 export default function Register() {
   const router = useRouter();
@@ -29,7 +29,7 @@ export default function Register() {
   return (
     <>
       <Head>
-        <title>Login | Goodreads Clone</title>
+        <title>Register | Goodreads Clone</title>
       </Head>
 
       <div

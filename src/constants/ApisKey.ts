@@ -1,2 +1,1 @@
-export const NewsWebApiKey="0448aca1ce944eb0a4fcfb34508a53bd"
-export const NewsWebApiUrl="https://newsapi.org/v2/top-headlines?country=us"
+export const GetImagesUrl="https://4dcb-124-109-45-157.in.ngrok.io/images/"

@@ -8,8 +8,6 @@ const ModifyBook = ({ book }: any) => {
 
   const handleSave = async () => {
     const data = { title, author, cover };
-    // await axios.put(`/api/books/${book.id}`, data);
-    // setEditing(false);
   };
 
   return (

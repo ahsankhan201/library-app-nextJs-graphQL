@@ -2,11 +2,14 @@ import { useCallback, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import client from "../../../src/apollo-client";
-import { LOGIN_MUTATION } from "../../utils/mutation";
+
 import styles from "@/styles/Register.module.css";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import { LOGIN_MUTATION } from "@/services/query/user";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
@@ -19,11 +22,10 @@ export default function LoginPage() {
           user: { email, password },
         },
       });
-      console.log(data.login);
+      Cookies.set("user", JSON.stringify(data.login.user));
+      Cookies.set("token", JSON.stringify(data.login.token));
       setAuthenticated(true);
-      // set the user information
-      Cookies.set("user", JSON.stringify(data));
-      Cookies.set("session_token", data.login.sessionToken);
+      router.push("/");
     } catch (error) {
       console.error(error);
       setAuthenticated(false);
@@ -116,3 +118,18 @@ export default function LoginPage() {
     </>
   );
 }
+
+
+// export async function getServerSideProps(context:any) {
+//   const { data } = await client.mutate({
+//     mutation: LOGIN_MUTATION,
+//     variables: {
+//       user: { email, password },
+//     },
+//   });
+//   return {
+//     props: {
+//       cookies: Cookies.parse(cookies),
+//     },
+//   };
+// }
