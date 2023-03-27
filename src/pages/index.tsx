@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import Navbar from "@/components/navBar/NavBar";
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const router = useRouter();

@@ -39,6 +39,9 @@ export default function Register() {
           padding: "14px 18px",
         }}
       >
+      <Link href="/">
+      Goto Home
+      </Link>
         <div className="w-screen mx-auto p-4 md:w-96">
           <h1 className="text-4xl text-center font-bold mb-4">Goodreads</h1>
           <h1 className="text-4xl text-center font-bold mb-4">Create Account</h1>

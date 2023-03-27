@@ -1,7 +1,36 @@
-import { Table, Row, Col, Tooltip, User, Text } from "@nextui-org/react";
+import {
+  Table,
+  Row,
+  Col,
+  Tooltip,
+  User,
+  Text,
+  Modal,
+  Button,
+} from "@nextui-org/react";
 import Link from "next/link";
+import { useState } from "react";
+import EditForm from "../pages/user/edit/editForm";
 
-export default function books() {
+interface Props{
+  data1: any;
+}
+
+export default function books({Props}:any) {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleEditClick = () => {
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
+  const handleSaveChanges = () => {
+    setShowModal(false);
+  };
+
   const columns1 = [
     { name: "Cover", uid: "cover" },
     { name: "Title", uid: "title" },
@@ -76,8 +105,18 @@ export default function books() {
       case "actions":
         return (
           <div>
-            <Link href="/user/modifyBook">
-              <h2>Edit</h2>
+            <h2 onClick={handleEditClick}>Edit</h2>
+            <Modal
+              width="80%"
+              open={showModal}
+              onClose={handleModalClose}
+              aria-labelledby="modal-title"
+              aria-describedby="modal-description"
+            >
+              <EditForm />
+            </Modal>
+            <Link href={`/user/detail/${user.id}`}>
+              <h2>View</h2>
             </Link>
           </div>
         );

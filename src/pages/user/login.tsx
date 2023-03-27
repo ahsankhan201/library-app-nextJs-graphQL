@@ -1,14 +1,15 @@
 import { useCallback, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import { useTranslation } from "next-i18next";
 import client from "../../../src/apollo-client";
-
 import styles from "@/styles/Register.module.css";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { LOGIN_MUTATION } from "@/services/query/user";
 
 export default function LoginPage() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,32 +42,31 @@ export default function LoginPage() {
   );
 
   if (authenticated) {
-    return <Link href="/"></Link>;
+    return <Link href="/">{t("back_to_homepage")}</Link>;
   }
 
   return (
     <>
-      <Head>
+      {/* <Head>
         <title>Login | Goodreads Clone</title>
-      </Head>
+      </Head> */}
       <div className="flex justify-center items-center h-screen">
         <div className="w-screen md:w-96 p-4 md:p-0">
-          <h1 className="text-4xl text-center font-bold mb-2.5">Goodreads</h1>
-          <h1 className="text-4xl text-center font-bold mb-2.5">Log In</h1>
+          <h1 className="text-4xl text-center font-bold mb-2.5">
+            {t("GOODREADS")}
+          </h1>
+          <h1 className="text-4xl text-center font-bold mb-2.5">
+            {t("SIGN_IN")}
+          </h1>
           <form onSubmit={handleFormSubmit}>
             <div className="mb-4">
               <label
                 htmlFor="email"
                 className="text-gray-700 block font-bold mb-2"
               >
-                Email
+                {t("EMAIL")}
               </label>
-              <img
-                src="https://ab33-124-109-45-157.au.ngrok.io/graphql/upload/1679569604609.png"
-                alt=""
-                width={200}
-                height={200}
-              />
+
               <input
                 type="email"
                 id="email"
@@ -79,10 +79,10 @@ export default function LoginPage() {
             <div className="mb-4">
               <div className="mb-2 flex justify-between items-center">
                 <label htmlFor="password" className="text-gray-700 font-bold">
-                  Password
+                  {t("PASSWORD")}
                 </label>
                 <a href="#" className="underline">
-                  Forgot your password?
+                  {t("FORGOT_PASSWORD")}
                 </a>
               </div>
               <input
@@ -98,18 +98,18 @@ export default function LoginPage() {
               type="submit"
               className="w-full bg-blue-500 h-9 text-white py-2 px-4 rounded-3xl hover:bg-blue-600"
             >
-              Log In
+              {t("SIGN_IN")}
             </button>
           </form>
           <div>
             <div className={styles.divider}>
               <p className="mt-4 z-10 px-2 text-center">
-                Don't have an account?{" "}
+                {t("DONT_HAVE_ACCOUNT")}
               </p>
             </div>
             <Link href="/user/register">
               <button className="w-full bg-blue-500 h-9 text-white py-2 px-4 rounded-3xl hover:bg-blue-600">
-                Sign Up
+                {t("SIGN_UP")}
               </button>
             </Link>
           </div>
@@ -118,18 +118,3 @@ export default function LoginPage() {
     </>
   );
 }
-
-
-// export async function getServerSideProps(context:any) {
-//   const { data } = await client.mutate({
-//     mutation: LOGIN_MUTATION,
-//     variables: {
-//       user: { email, password },
-//     },
-//   });
-//   return {
-//     props: {
-//       cookies: Cookies.parse(cookies),
-//     },
-//   };
-// }

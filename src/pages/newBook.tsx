@@ -4,7 +4,7 @@ import client from "../apollo-client";
 import { convertImageToBase64 } from "@/utils/utils";
 import { Create_Book_Mutation } from "@/services/query/books";
 
-export default function NewBook() {
+export default function NewBook({}) {
   const [book, setBook] = useState({
     title: "",
     author: "",

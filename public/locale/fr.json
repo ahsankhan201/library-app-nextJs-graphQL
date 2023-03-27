@@ -1,0 +1,10 @@
+{
+    "DONT_HAVE_ACCOUNT": "Vous n'avez pas de compte?",
+    "ALREADY_HAVE_ACCOUNT": "Vous avez déjà un compte?",
+    "SIGN_UP": "S'inscrire",
+    "SIGN_IN": "Se connecter",
+    "SIGN_OUT": "Se déconnecter",
+    "EMAIL": "E-mail",
+    "PASSWORD": "Mot de passe",
+    "USERNAME": "Nom d'utilisateur"
+    }

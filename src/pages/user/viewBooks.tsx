@@ -8,16 +8,18 @@ import { Get_All_Books_Query } from "@/services/query/books";
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 
-const ViewBooks = ({ data }:any) => {
+const ViewBooks = ({ data }: any) => {
   const [data1, setData] = useState<any>(data);
-  const [token, setToken] = useState<any>();
+  const [token, setToken] = useState<any>("");
 
   useEffect(() => {
-    console.log("data",data)
+    console.log("data", data);
     setToken(Cookies.get("token"));
-  });
+    console.log("token", token,Cookies.get("token"));
+  },[]);
 
   const getAll = async () => {
+    console.log("get Token",token)
     try {
       const { data } = await client.mutate({
         mutation: Get_All_Books_Query,
@@ -58,31 +60,18 @@ const ViewBooks = ({ data }:any) => {
             </Tab>
           </TabList>
           <TabPanel>
-            <Books />
+            <Books data1={data1} />
           </TabPanel>
           <TabPanel>
-            <Books />
+            <Books data1={data1} />
           </TabPanel>
           <TabPanel>
-            <Books />
+            <Books data1={data1} />
           </TabPanel>
         </Tabs>
-      </div>
-      <div>
-        {data1?.map((item: any) => {
-          return (
-            <img
-              src={`${GetImagesUrl}` + item.cover_Image}
-              alt=""
-              width={200}
-              height={200}
-            />
-          );
-        })}
       </div>
     </>
   );
 };
 
 export default ViewBooks;
-
