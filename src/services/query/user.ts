@@ -24,3 +24,4 @@ mutation CreateUser($user: UserInput!) {
     }
 }
 `;
+

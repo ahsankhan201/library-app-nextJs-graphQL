@@ -2,19 +2,76 @@ import Head from "next/head";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import ViewBooks from "./user/viewBooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import Navbar from "@/components/navBar/NavBar";
+import ReactStars from "react-stars";
+import { GetImagesUrl } from "@/constants/ApisKey";
+import { Modal } from "@nextui-org/react";
+import Link from "next/link";
+import { Get_All_Books_Query, Set_The_Selves } from "@/services/query/books";
+import client from "@/apollo-client";
 
 export default function Home() {
   const router = useRouter();
+  const [data1, setData] = useState<any>();
+  const [token, setToken] = useState<any>("");
+  const [status, setStatus] = useState<any>("");
+  const [book_id, setBook_id] = useState<any>("");
   useEffect(() => {
     if (!Cookies.get("user")) {
       router.push("/user/login");
       return;
     }
+    setToken(Cookies.get("token"));
   });
+
+  const getAll = async () => {
+    console.log("get Token", token);
+    try {
+      const { data } = await client.mutate({
+        mutation: Get_All_Books_Query,
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      });
+      setData(data.books);
+      console.log("Success!", data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const Set_TheSelve = async (event: any, book_id: any) => {
+    try {
+      console.log("event", event.target.value);
+      console.log("book_id", book_id);
+   
+
+      const { data } = await client.mutate({  
+        mutation: Set_The_Selves,
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        variables: {
+          shelve: {  book_id, status: event.target.value },
+        },
+      });
+
+      console.log("selve created", data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getAll();
+  }, []);
 
   return (
     <>
@@ -29,8 +86,58 @@ export default function Home() {
           style={{
             marginTop: "60px",
           }}
-        >       
-          <ViewBooks />
+        >
+          <div style={{ marginTop: "150px" }}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Cover</th>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Average rating</th>
+                  <th>Date added</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data1?.map((user: any) => {
+                  console.log("user", user);
+                  return (
+                    <tr>
+                      <td>
+                        <img
+                          src={`${GetImagesUrl}${user?.cover_Image}`}
+                          alt="cover"
+                          width="100"
+                          height="150"
+                        />
+                      </td>
+                      <td>{user?.title}</td>
+                      <td>{user?.author}</td>
+                      <td>
+                        <ReactStars
+                          count={user[0]?.stars}
+                          size={24}
+                          color2={"#ffd700"}
+                        />
+                      </td>
+
+                      <td>{user?.date}</td>
+                      <select
+                        onChange={(event) => Set_TheSelve(event, user?._id)}
+                      >
+                        <option value="Want to read">Want to read</option>
+                        <option value="Reading">
+                        Reading
+                        </option>
+                        <option value="Read">Read</option>
+                      </select>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
       </main>
     </>

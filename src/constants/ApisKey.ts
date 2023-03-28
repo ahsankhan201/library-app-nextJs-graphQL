@@ -1,1 +1,1 @@
-export const GetImagesUrl="https://4dcb-124-109-45-157.in.ngrok.io/images/"
+export const GetImagesUrl="http://localhost:5000/images/"

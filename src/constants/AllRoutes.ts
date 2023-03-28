@@ -4,16 +4,8 @@ const AllRoutes = [
     name: "Home",
   },
   {
-    route: "myBooks",
+    route: "/user/viewBooks",
     name: "MyBooks",
-  },
-  {
-    route: "/user",
-    name: "User",
-  },
-  {
-    route: "/feed",
-    name: "Feeds",
   },
   {
     route: "/newBook",

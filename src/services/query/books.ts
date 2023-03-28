@@ -32,3 +32,45 @@ query Query {
 
 }
 `;
+
+export const Get_Book_ById_Query = gql`
+query Query($bookId: ID!) {
+  book(id: $bookId) {
+    _id
+    title
+    author
+    average_rating
+    cover_Image
+    date
+    ratings {
+      _id
+      book_id
+      comment
+      stars
+      user_id
+    }
+  }
+}
+`
+
+export const Set_The_Selves = gql`
+mutation Mutation($shelve: ShelveInput!) {
+  createShelve(shelve: $shelve) {
+    _id
+    book_id
+    status
+    user_id
+  }
+}
+`
+
+export const Login_User_Books = gql`
+query Query {
+  shelves {
+    _id
+    book_id
+    status
+    user_id
+  }
+}
+`

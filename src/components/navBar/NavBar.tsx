@@ -14,24 +14,27 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed inset-x-0 top-0">
-      <ul className="">
-        {AllRoutes.map((route: any, index: any) => (
-          <li key={index}>
-            <Link href={route.route}>{route.name}</Link>
-          </li>
-        ))}
-      </ul>
-      <select
-        name="language"
-        id="language"
-        value={selectedLanguage}
-        onChange={changeLanguage}
-      >
-        <option value="en">English</option>
-        <option value="fr">French</option>
-      </select>
-    </nav>
+<nav className="fixed inset-x-0 top-0">
+  <div>
+    <ul className="">
+      {AllRoutes.map((route: any, index: any) => (
+        <li key={index}>
+          <Link href={route.route}>{route.name}</Link>
+        </li>
+      ))}
+    </ul>
+    <select
+      name="language"
+      id="language"
+      value={selectedLanguage}
+      onChange={changeLanguage}
+    >
+      <option value="en">English</option>
+      <option value="fr">French</option>
+    </select>
+  </div>
+</nav>
+
   );
 };
 

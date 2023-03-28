@@ -6,29 +6,19 @@ import Navbar from "../components/navBar/NavBar";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import { ProtectedRoutes } from "../_middleware";
+import { ProtectedRoutes } from "../routeProtecter";
 import { I18nextProvider } from "react-i18next";
+import { io } from "socket.io-client";
+
 import i18n from "../../src/i18n";
-function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const [authenticate, Setauthenticate] = useState(false);
+
+  const [socket, setSocket] = useState<any>(null);
 
   useEffect(() => {
     i18n.loadLanguages(["en", "fr", "de"]);
-    if (
-      !Cookies.get("user") ||
-      router.pathname === "/user/login" ||
-      router.pathname === "/user/register"
-    ) {
-      Setauthenticate(false);
-      router.push("/user/login");
-      return;
-    }
-    if (Cookies.get("user")) {
-      Setauthenticate(true);
-      return;
-    }
-  }, [authenticate]);
+  }, []);
 
   return (
     <>

@@ -47,16 +47,16 @@ export default function LoginPage() {
 
   return (
     <>
-      {/* <Head>
+      <Head>
         <title>Login | Goodreads Clone</title>
-      </Head> */}
+      </Head>
       <div className="flex justify-center items-center h-screen">
         <div className="w-screen md:w-96 p-4 md:p-0">
           <h1 className="text-4xl text-center font-bold mb-2.5">
-            {t("GOODREADS")}
+            {/* {t("GOODREADS")} */}
           </h1>
           <h1 className="text-4xl text-center font-bold mb-2.5">
-            {t("SIGN_IN")}
+            {/* {t("SIGN_IN")} */}
           </h1>
           <form onSubmit={handleFormSubmit}>
             <div className="mb-4">
@@ -64,7 +64,7 @@ export default function LoginPage() {
                 htmlFor="email"
                 className="text-gray-700 block font-bold mb-2"
               >
-                {t("EMAIL")}
+                {/* {t("EMAIL")} */}
               </label>
 
               <input
@@ -79,10 +79,10 @@ export default function LoginPage() {
             <div className="mb-4">
               <div className="mb-2 flex justify-between items-center">
                 <label htmlFor="password" className="text-gray-700 font-bold">
-                  {t("PASSWORD")}
+                  {/* {t("PASSWORD")} */}
                 </label>
                 <a href="#" className="underline">
-                  {t("FORGOT_PASSWORD")}
+                  {/* {t("FORGOT_PASSWORD")} */}
                 </a>
               </div>
               <input
@@ -98,18 +98,18 @@ export default function LoginPage() {
               type="submit"
               className="w-full bg-blue-500 h-9 text-white py-2 px-4 rounded-3xl hover:bg-blue-600"
             >
-              {t("SIGN_IN")}
+              {/* {t("SIGN_IN")} */}
             </button>
           </form>
           <div>
             <div className={styles.divider}>
               <p className="mt-4 z-10 px-2 text-center">
-                {t("DONT_HAVE_ACCOUNT")}
+                {/* {t("DONT_HAVE_ACCOUNT")} */}
               </p>
             </div>
             <Link href="/user/register">
               <button className="w-full bg-blue-500 h-9 text-white py-2 px-4 rounded-3xl hover:bg-blue-600">
-                {t("SIGN_UP")}
+                {/* {t("SIGN_UP")} */}
               </button>
             </Link>
           </div>
