@@ -2,9 +2,8 @@ import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import client from "../../../src/apollo-client";
+import client from "../../apolloClientIntercept";
 import { Register_MUTATION } from "@/services/query/user";
-
 
 export default function Register() {
   const router = useRouter();

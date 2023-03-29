@@ -1,18 +1,9 @@
-import {
-  Table,
-  Row,
-  Col,
-  Tooltip,
-  User,
-  Text,
-  Modal,
-  Button,
-} from "@nextui-org/react";
+import { Modal } from "@nextui-org/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import EditForm from "../pages/user/edit/editForm";
 import ReactStars from "react-stars";
-import { GetImagesUrl } from "@/constants/ApisKey";
+import { Get_Image_Url } from "environment";
 
 interface Props {
   data1: any;
@@ -24,7 +15,6 @@ export default function books({ data1 }: Props) {
 
   useEffect(() => {
     setSelectedBook(data1);
-    console.log("data1", data1);
   }, [data1]);
 
   const handleEditClick = () => {
@@ -59,10 +49,10 @@ export default function books({ data1 }: Props) {
               <td className="text-center">
                 <img
                   className="m-auto"
-                  src={`${GetImagesUrl}${user?.cover_Image}`}
+                  src={`${Get_Image_Url}${user?.cover_Image}`}
                   alt="cover"
                   width="100"
-                max-height="150"
+                  max-height="150"
                 />
               </td>
               <td className="text-center">{user?.book_id}</td>

@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useTranslation } from "next-i18next";
-import client from "../../../src/apollo-client";
+import client from "../../apolloClientIntercept";
 import styles from "@/styles/Register.module.css";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";

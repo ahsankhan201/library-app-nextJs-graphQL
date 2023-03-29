@@ -1,10 +1,9 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import ObjectId from "bson-objectid";
-import client from "@/apollo-client";
+import client from "@/apolloClientIntercept";
 import { Get_Book_ById_Query } from "@/services/query/books";
 import Cookies from "js-cookie";
-import { GetImagesUrl } from "@/constants/ApisKey";
+import { Get_Image_Url } from "environment";
 
 export default function BookDetail() {
   const router = useRouter();
@@ -27,7 +26,6 @@ export default function BookDetail() {
     
       variables: { bookId:book },
     });
-    console.log("specofoc book",data.books)
     setBookdetail(data.book);
   };
 
@@ -41,7 +39,7 @@ export default function BookDetail() {
     <div className="w-4/5 ml-4 mt-24">
       <div className="flex flex-row space-between">
         <div>
-          <img src={`${GetImagesUrl}${bookDetail?.cover_Image}`} alt="" />
+          <img src={`${Get_Image_Url}${bookDetail?.cover_Image}`} alt="" />
         </div>
         <div className="border-2 text-black mr-8 p-4">
           <h2 className="text-2xl font-bold mb-2">{bookDetail?.title}</h2>

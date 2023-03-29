@@ -1,9 +1,8 @@
-import client from "@/apollo-client";
+import client from "@/apolloClientIntercept";
 import { Get_Book_ById_Query } from "@/services/query/books";
 import Cookies from "js-cookie";
 import router from "next/router";
 import { useEffect, useState } from "react";
-
 interface Props{
   userid:any
 }
@@ -33,7 +32,6 @@ const editForm = ({userid}:Props) => {
     }
   }
 
-  const handleSave = async () => {};
   useEffect(()=>{
     setToken(Cookies.get("token"));
     const getBookById = async () => {

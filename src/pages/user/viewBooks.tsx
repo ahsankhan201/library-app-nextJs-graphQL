@@ -2,33 +2,18 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import Head from "next/head";
 import Books from "@/components/Books";
-import client from "../../../src/apollo-client";
+import client from "../../apolloClientIntercept";
 import { Login_User_Books, Shelve_By_Status } from "@/services/query/books";
 import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 
 const ViewBooks = ({ data }: any) => {
   const [data1, setData] = useState<any>(data);
-  const [token, setToken] = useState<any>(Cookies.get("token"));
-
-  useEffect(() => {
-    console.log("data", data);
-
-    setToken(Cookies.get("token"));
-    console.log("token", token, Cookies.get("token"));
-  }, []);
 
   const getAll = async () => {
-    console.log("get Token", token);
     try {
-      const token1 = token?.replace(/"/g, "");
       const { data } = await client.query({
         query: Login_User_Books,
-        context: {
-          headers: {
-            authorization: token ? `Bearer ${token1}` : "",
-          },
-        },
       });
       setData(data.shelves);
     } catch (error) {
@@ -39,14 +24,8 @@ const ViewBooks = ({ data }: any) => {
   const Shelve_By_Status_Record = async (status: any) => {
     try {
       setData([]);
-      const token1 = token?.replace(/"/g, "");
       const { data } = await client.query({
         query: Shelve_By_Status,
-        context: {
-          headers: {
-            authorization: token ? `Bearer ${token1}` : "",
-          },
-        },
         variables: {
           status,
         },
@@ -59,7 +38,6 @@ const ViewBooks = ({ data }: any) => {
 
   useEffect(() => {
     getAll();
-   
   }, []);
 
   return (

@@ -4,34 +4,19 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import ReactStars from "react-stars";
-import { GetImagesUrl } from "@/constants/ApisKey";
-import { format } from "date-fns";
+
 import { Get_All_Books_Query, Set_The_Selves } from "@/services/query/books";
-import client from "@/apollo-client";
+import client from "@/apolloClientIntercept";
+import { Get_Image_Url } from "environment";
 
 export default function Home() {
   const router = useRouter();
   const [data1, setData] = useState<any>();
-  const [token, setToken] = useState<any>("");
-
-  useEffect(() => {
-    if (!Cookies.get("user")) {
-      router.push("/user/login");
-      return;
-    }
-    setToken(Cookies.get("token"));
-  });
 
   const getAll = async () => {
-    const token1 = token?.replace(/"/g, "");
     try {
       const { data } = await client.mutate({
         mutation: Get_All_Books_Query,
-        context: {
-          headers: {
-            Authorization: `Bearer ${token1}`,
-          },
-        },
       });
       setData(data.books);
     } catch (error) {
@@ -41,14 +26,8 @@ export default function Home() {
 
   const Set_TheSelve = async (event: any, book_id: any) => {
     try {
-      const token1 = token?.replace(/"/g, "");
       const { data } = await client.mutate({
         mutation: Set_The_Selves,
-        context: {
-          headers: {
-            Authorization: `Bearer ${token1}`,
-          },
-        },
         variables: {
           shelve: { book_id, status: event.target.value },
         },
@@ -59,6 +38,10 @@ export default function Home() {
   };
 
   useEffect(() => {
+    if (!Cookies.get("user")) {
+      router.push("/user/login");
+      return;
+    }
     getAll();
   }, []);
 
@@ -95,13 +78,16 @@ export default function Home() {
                     <tr>
                       <td>
                         <img
-                          src={`${GetImagesUrl}${user?.cover_Image}`}
+                          src={`${Get_Image_Url}${user?.cover_Image}`}
                           alt="cover"
                           width="100"
                           height="150"
                         />
                       </td>
-                      <td>{user?.title}{user?.average_rating}</td>
+                      <td>
+                        {user?.title}
+                        {user?.average_rating}
+                      </td>
                       <td>{user?.author}</td>
                       <td>
                         <ReactStars
@@ -110,7 +96,9 @@ export default function Home() {
                           color1="grey"
                           color2={"#ffd700"}
                           edit={false}
-                          value={user?.average_rating ? user?.average_rating : 0}
+                          value={
+                            user?.average_rating ? user?.average_rating : 0
+                          }
                         />
                       </td>
 
