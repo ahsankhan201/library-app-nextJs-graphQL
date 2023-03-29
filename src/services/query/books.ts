@@ -115,3 +115,16 @@ mutation Mutation($updateBookId: ID!, $book: BookInput!) {
   }
 }
 `
+
+
+export const Rate_Specific_Book=gql`
+mutation Mutation($rating: RatingInput!) {
+  createRating(rating: $rating) {
+    _id
+    book_id
+    comment
+    stars
+    user_id
+  }
+}
+`

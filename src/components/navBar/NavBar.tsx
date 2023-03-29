@@ -5,9 +5,12 @@ import { useTranslation } from "react-i18next";
 import i18n from "i18next";
 import router from "next/router";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 const Navbar = () => {
+  const router = useRouter();
   const { t } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState("en");
+ 
 
   const changeLanguage = (e: any) => {
     const lang = e.target.value;
@@ -26,7 +29,11 @@ const Navbar = () => {
   <div className="flex justify-between items-center w-full">
     <ul className="">
       {AllRoutes.map((route: any, index: any) => (
+        // if user.role is admin and route.name == add book then show it
+        // if user.role is user and route.name == add book then hide it
+      
         <li key={index}>
+
           <Link href={route.route}>{route.name}</Link>
         </li>
       ))}

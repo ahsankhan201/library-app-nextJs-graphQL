@@ -3,8 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Get_Image_Url } from "environment";
 import Ratings from "./ratings";
-import EditForm from '../pages/user/edit/editForm'
-
+import EditForm from "../pages/user/edit/editForm";
 
 interface Props {
   data1: any;
@@ -59,7 +58,7 @@ export default function books({ data1 }: Props) {
               <td className="text-center">{user?.book_id}</td>
               <td className="text-center">{user?.user_id}</td>
               <td className="text-center">
-               <Ratings user={user} />
+                <Ratings user={user} />
               </td>
 
               <td className="text-center">

@@ -17,10 +17,14 @@ function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     i18n.loadLanguages(["en", "fr", "de"]);
-    // if(Cookies.get("user")){
-    // const socket = io("http://localhost:4000");
-    //   setSocket(socket);
-    // }
+    if(Cookies.get("user")){
+    const socket = io("http://localhost:5000");
+      setSocket(socket);
+    }
+    socket.on("book-rating", (data:any) => {
+      console.log("data",data);
+    });
+    
   }, []);
 
   
@@ -35,7 +39,7 @@ function App({ Component, pageProps }: AppProps) {
             nextUrl="/user/login"
             cookies={{ user: Cookies.get("user") }}
           >
-            <Component {...pageProps} />
+            <Component {...pageProps} socket={socket} />
           </ProtectedRoutes>
         </NextUIProvider>
       </I18nextProvider>
