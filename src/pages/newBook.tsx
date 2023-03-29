@@ -3,6 +3,7 @@ import { useState } from "react";
 import client from "../apollo-client";
 import { convertImageToBase64 } from "@/utils/utils";
 import { Create_Book_Mutation } from "@/services/query/books";
+import Cookies from "js-cookie";
 
 export default function NewBook({}) {
   const [book, setBook] = useState({
@@ -10,6 +11,7 @@ export default function NewBook({}) {
     author: "",
     coverImage: null,
   });
+  const [token, setToken] = useState<any>(Cookies.get("token"));
 
   const handleInputChange = (
     event: React.ChangeEvent<
@@ -28,8 +30,14 @@ export default function NewBook({}) {
         return;
       }
       const coverImageBase64 = await convertImageToBase64(book?.coverImage);
+      const token1 = token?.replace(/"/g, "");
       const { data } = await client.mutate({
         mutation: Create_Book_Mutation,
+        context: {
+          headers: {
+            authorization: token ? `Bearer ${token1}` : "",
+          },
+        },
         variables: {
           book: {
             title: book.title,

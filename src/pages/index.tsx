@@ -1,15 +1,11 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import ViewBooks from "./user/viewBooks";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import Navbar from "@/components/navBar/NavBar";
 import ReactStars from "react-stars";
 import { GetImagesUrl } from "@/constants/ApisKey";
-import { Modal } from "@nextui-org/react";
-import Link from "next/link";
+import { format } from "date-fns";
 import { Get_All_Books_Query, Set_The_Selves } from "@/services/query/books";
 import client from "@/apollo-client";
 
@@ -17,8 +13,7 @@ export default function Home() {
   const router = useRouter();
   const [data1, setData] = useState<any>();
   const [token, setToken] = useState<any>("");
-  const [status, setStatus] = useState<any>("");
-  const [book_id, setBook_id] = useState<any>("");
+
   useEffect(() => {
     if (!Cookies.get("user")) {
       router.push("/user/login");
@@ -28,18 +23,17 @@ export default function Home() {
   });
 
   const getAll = async () => {
-    console.log("get Token", token);
+    const token1 = token?.replace(/"/g, "");
     try {
       const { data } = await client.mutate({
         mutation: Get_All_Books_Query,
         context: {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token1}`,
           },
         },
       });
       setData(data.books);
-      console.log("Success!", data);
     } catch (error) {
       console.error(error);
     }
@@ -47,23 +41,18 @@ export default function Home() {
 
   const Set_TheSelve = async (event: any, book_id: any) => {
     try {
-      console.log("event", event.target.value);
-      console.log("book_id", book_id);
-   
-
-      const { data } = await client.mutate({  
+      const token1 = token?.replace(/"/g, "");
+      const { data } = await client.mutate({
         mutation: Set_The_Selves,
         context: {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token1}`,
           },
         },
         variables: {
-          shelve: {  book_id, status: event.target.value },
+          shelve: { book_id, status: event.target.value },
         },
       });
-
-      console.log("selve created", data);
     } catch (error) {
       console.error(error);
     }
@@ -112,24 +101,28 @@ export default function Home() {
                           height="150"
                         />
                       </td>
-                      <td>{user?.title}</td>
+                      <td>{user?.title}{user?.average_rating}</td>
                       <td>{user?.author}</td>
                       <td>
                         <ReactStars
-                          count={user[0]?.stars}
+                          count={5}
                           size={24}
+                          color1="grey"
                           color2={"#ffd700"}
+                          edit={false}
+                          value={user?.average_rating ? user?.average_rating : 0}
                         />
                       </td>
 
-                      <td>{user?.date}</td>
+                      <td>
+                        {user?.date &&
+                          new Date(JSON.parse(user.date)).toLocaleString()}
+                      </td>
                       <select
                         onChange={(event) => Set_TheSelve(event, user?._id)}
                       >
                         <option value="Want to read">Want to read</option>
-                        <option value="Reading">
-                        Reading
-                        </option>
+                        <option value="Reading">Reading</option>
                         <option value="Read">Read</option>
                       </select>
                     </tr>

@@ -8,23 +8,26 @@ import { GetImagesUrl } from "@/constants/ApisKey";
 
 export default function BookDetail() {
   const router = useRouter();
-  const [boodId, setBookId] = useState<any>();
+  const [boodId, setBookId] = useState<any>(router.query.id);
   const [token, setToken] = useState<any>("");
   const [bookDetail, setBookdetail] = useState<any>();
 
   const getBookById = async () => {
-    let bookIds = new ObjectId(boodId);
+   
+    const token1 = token?.replace(/"/g, "");
     console.log(router.query.id);
-    const { data } = await client.query({
-      query: Get_Book_ById_Query,
+    const book=boodId.toString()
+    const { data } = await  client.mutate({
+      mutation: Get_Book_ById_Query,
       context: {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token1}`,
         },
       },
     
-      variables: { bookId:bookIds },
+      variables: { bookId:book },
     });
+    console.log("specofoc book",data.books)
     setBookdetail(data.book);
   };
 
@@ -46,11 +49,7 @@ export default function BookDetail() {
             by <b>{bookDetail?.author}</b>
           </p>
           <div className="flex flex-row items-center">
-            <img
-              src="https://picsum.photos/200/300"
-              alt=""
-              className="w-16 h-16 rounded-full mr-4"
-            />
+         
             <div>
               <p className="text-lg font-bold">Waqas's review</p>
               <p className="text-sm">bookshelves: to-read</p>

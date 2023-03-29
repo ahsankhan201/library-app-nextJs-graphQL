@@ -4,28 +4,53 @@ import Cookies from "js-cookie";
 import router from "next/router";
 import { useEffect, useState } from "react";
 
-const editForm = () => {
-  const [token,setToken]=useState<any>("");
-  const [boodId,setBookId] = useState<any>("641c3b75dc76253ad00b8dfe")
+interface Props{
+  userid:any
+}
+
+const editForm = ({userid}:Props) => {
+  const [token,setToken]=useState<any>(Cookies.get("token"));
+  const [boodId,setBookId] = useState<any>(userid)
+  const [bookDetail, setBookdetail] = useState<any>();
+
+
+  const getUserSpecificBook = async () => {
+    try {
+      const { data } = await client.query({
+        query: Get_Book_ById_Query,
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      
+        variables: { boodId },
+      });
+      setBookdetail(data.book);
+      
+    } catch (error) {
+      console.log("error", error)
+    }
+  }
 
   const handleSave = async () => {};
   useEffect(()=>{
-    // setToken(Cookies.get("token"));
-    // const getBookById = async () => {
-    //   console.log(router.query.id?.slice(0,-1))
-    //   const { data } = await client.query({
-    //     query: Get_Book_ById_Query,
-    //     context: {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     },
-    //     variables: {  boodId },
+    setToken(Cookies.get("token"));
+    const getBookById = async () => {
+      console.log(router.query.id?.slice(0,-1))
+      const { data } = await client.query({
+        query: Get_Book_ById_Query,
+        context: {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        variables: {  boodId },
        
-    //   });
-    //   console.log(data);
-    //   console.log("Success!", data);
-    // };
+      });
+      console.log(data);
+      console.log("Success!", data);
+    };
   },[])
 
   return (

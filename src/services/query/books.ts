@@ -34,20 +34,20 @@ query Query {
 `;
 
 export const Get_Book_ById_Query = gql`
-query Query($bookId: ID!) {
+mutation Mutation($bookId: ID!) {
   book(id: $bookId) {
     _id
-    title
     author
     average_rating
     cover_Image
     date
+    title
     ratings {
-      _id
-      book_id
-      comment
-      stars
       user_id
+      stars
+      comment
+      book_id
+      _id
     }
   }
 }
@@ -64,13 +64,41 @@ mutation Mutation($shelve: ShelveInput!) {
 }
 `
 
+export const Shelve_By_Status = gql`
+query Query($status: String!) {
+  shelveByStatus(status: $status) {
+    _id
+    average_rating
+    book_id
+    ratings {
+      user_id
+      stars
+      comment
+      book_id
+      _id
+    }
+    user_id
+    status
+  }
+}
+`
+
 export const Login_User_Books = gql`
 query Query {
   shelves {
-    _id
-    book_id
-    status
     user_id
+    status
+    book_id
+    _id
+    ratings {
+      _id
+      book_id
+      comment
+      stars
+      user_id
+    }
+    average_rating
   }
 }
+
 `

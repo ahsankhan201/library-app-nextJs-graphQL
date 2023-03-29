@@ -13,7 +13,6 @@ import { io } from "socket.io-client";
 import i18n from "../../src/i18n";
 function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-
   const [socket, setSocket] = useState<any>(null);
 
   useEffect(() => {

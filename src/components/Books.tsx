@@ -40,33 +40,34 @@ export default function books({ data1 }: Props) {
   };
 
   return (
-    <table>
+    <table className="w-full">
       <thead>
         <tr>
           <th>Cover</th>
           <th>Title</th>
           <th>Author</th>
           <th>Average rating</th>
-          <th>Date added</th>
+
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {selectedBook?.map((user: any) => {
+        {data1?.map((user: any) => {
           console.log("user", user);
           return (
             <tr>
-              <td>
+              <td className="text-center">
                 <img
+                  className="m-auto"
                   src={`${GetImagesUrl}${user?.cover_Image}`}
                   alt="cover"
                   width="100"
-                  height="150"
+                max-height="150"
                 />
               </td>
-              <td>{user?.title}</td>
-              <td>{user?.author}</td>
-              <td>
+              <td className="text-center">{user?.book_id}</td>
+              <td className="text-center">{user?.user_id}</td>
+              <td className="text-center">
                 <ReactStars
                   count={user[0]?.stars}
                   size={24}
@@ -74,9 +75,7 @@ export default function books({ data1 }: Props) {
                 />
               </td>
 
-              <td>{user?.date}</td>
-
-              <td>
+              <td className="text-center">
                 <div>
                   <h2 onClick={handleEditClick}>Edit</h2>
                   <Modal
@@ -86,9 +85,9 @@ export default function books({ data1 }: Props) {
                     aria-labelledby="modal-title"
                     aria-describedby="modal-description"
                   >
-                    <EditForm />
+                    <EditForm userid={user?.book_id} />
                   </Modal>
-                  <Link href={`/detail/${user?._id}`}>
+                  <Link href={`/detail/${user?.book_id}`}>
                     <h2>View</h2>
                   </Link>
                 </div>
