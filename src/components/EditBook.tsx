@@ -1,14 +1,21 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import client from "../apolloClientIntercept";
 import { convertImageToBase64 } from "@/utils/utils";
-import { Create_Book_Mutation } from "@/services/query/books";
+import { useRouter } from "next/router";
+import {
+  Update_Book_By_Admin,
+} from "@/services/query/books";
 
-export default function NewBook({}) {
+export default function EditBook({ userData,setShowModal }: any) {
+  const router = useRouter();
+  const [fileChange, setFileChange] = useState(false);
+  console.log("userdarta", userData);
   const [book, setBook] = useState({
-    title: "",
-    author: "",
-    coverImage: null,
+    title: userData.title,
+    author: userData.author,
+    coverImage: userData.coverImage,
+    bookId: userData._id,
   });
 
   const handleInputChange = (
@@ -18,26 +25,30 @@ export default function NewBook({}) {
   ) => {
     const { name, value, files } = event.target;
     setBook((prevState) => ({ ...prevState, [name]: files?.[0] || value }));
+    setFileChange(true);
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      if (!book.coverImage) {
-        console.log("No image selected");
-        return;
-      }
       const coverImageBase64 = await convertImageToBase64(book?.coverImage);
+
       const { data } = await client.mutate({
-        mutation: Create_Book_Mutation,
+        mutation: Update_Book_By_Admin,
         variables: {
+          updateBookId: book.bookId,
           book: {
             title: book.title,
             author: book.author,
-            cover_Image: coverImageBase64,
+            cover_Image: fileChange ? coverImageBase64 : undefined,
           },
         },
       });
+      if(data){
+        // close the modal
+        setShowModal(false);
+        router.push("/")
+      }
     } catch (error) {
       console.error(error);
     }
@@ -106,7 +117,7 @@ export default function NewBook({}) {
                 type="submit"
                 className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 cursor-pointer"
               >
-                Add Book
+                Update Book
               </button>
             </div>
           </div>

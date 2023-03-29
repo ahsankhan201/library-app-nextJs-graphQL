@@ -1,9 +1,10 @@
 import { Modal } from "@nextui-org/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import EditForm from "../pages/user/edit/editForm";
-import ReactStars from "react-stars";
 import { Get_Image_Url } from "environment";
+import Ratings from "./ratings";
+import EditForm from '../pages/user/edit/editForm'
+
 
 interface Props {
   data1: any;
@@ -58,11 +59,7 @@ export default function books({ data1 }: Props) {
               <td className="text-center">{user?.book_id}</td>
               <td className="text-center">{user?.user_id}</td>
               <td className="text-center">
-                <ReactStars
-                  count={user[0]?.stars}
-                  size={24}
-                  color2={"#ffd700"}
-                />
+               <Ratings user={user} />
               </td>
 
               <td className="text-center">

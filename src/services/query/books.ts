@@ -102,3 +102,16 @@ query Query {
 }
 
 `
+
+
+export const Update_Book_By_Admin = gql`
+mutation Mutation($updateBookId: ID!, $book: BookInput!) {
+  updateBook(id: $updateBookId, book: $book) {
+    _id
+    author
+    title
+    cover_Image
+    date
+  }
+}
+`

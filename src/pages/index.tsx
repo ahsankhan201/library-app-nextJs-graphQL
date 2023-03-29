@@ -3,15 +3,18 @@ import styles from "@/styles/Home.module.css";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-import ReactStars from "react-stars";
 
 import { Get_All_Books_Query, Set_The_Selves } from "@/services/query/books";
 import client from "@/apolloClientIntercept";
 import { Get_Image_Url } from "environment";
+import Ratings from "@/components/ratings";
+import { Modal } from "@nextui-org/react";
+import EditPage from "@/components/EditBook";
 
 export default function Home() {
   const router = useRouter();
   const [data1, setData] = useState<any>();
+  const [showModal, setShowModal] = useState(false);
 
   const getAll = async () => {
     try {
@@ -37,6 +40,15 @@ export default function Home() {
     }
   };
 
+  const handleEditClick = () => {
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
+
   useEffect(() => {
     if (!Cookies.get("user")) {
       router.push("/user/login");
@@ -60,7 +72,7 @@ export default function Home() {
           }}
         >
           <div style={{ marginTop: "150px" }}>
-          <table className="w-full">
+            <table className="w-full">
               <thead>
                 <tr>
                   <th>Cover</th>
@@ -78,7 +90,7 @@ export default function Home() {
                     <tr>
                       <td className="text-center">
                         <img
-                        className="m-auto"
+                          className="m-auto"
                           src={`${Get_Image_Url}${user?.cover_Image}`}
                           alt="cover"
                           width="100"
@@ -88,31 +100,34 @@ export default function Home() {
                       <td className="text-center">{user?.title}</td>
                       <td className="text-center">{user?.author}</td>
                       <td className="text-center">
-                        <ReactStars
-                          count={user[0]?.stars}
-                          size={24}
-                          color2={"#ffd700"}
-                        />
+                        <Ratings user={user} />
                       </td>
 
                       <td className="text-center">{user?.date}</td>
                       <td className="text-center">
-                      <select
-                        onChange={(event) => Set_TheSelve(event, user?._id)}
-                      >
-                        <option value="Want to read">Want to read</option>
-                        <option value="Reading">
-                        Reading
-                        </option>
-                        <option value="Read">Read</option>
-                      </select>
+                        <select
+                          onChange={(event) => Set_TheSelve(event, user?._id)}
+                        >
+                          <option value="Want to read">Want to read</option>
+                          <option value="Reading">Reading</option>
+                          <option value="Read">Read</option>
+                        </select>
+                        <h2 onClick={handleEditClick}>Edit</h2>
+                        <Modal
+                          width="80%"
+                          open={showModal}
+                          onClose={handleModalClose}
+                          aria-labelledby="modal-title"
+                          aria-describedby="modal-description"
+                        >
+                          <EditPage userData={user} setShowModal={setShowModal} />
+                        </Modal>
                       </td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
-
           </div>
         </div>
       </main>

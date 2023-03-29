@@ -17,7 +17,14 @@ function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     i18n.loadLanguages(["en", "fr", "de"]);
+    // if(Cookies.get("user")){
+    // const socket = io("http://localhost:4000");
+    //   setSocket(socket);
+    // }
   }, []);
+
+  
+
 
   return (
     <>
