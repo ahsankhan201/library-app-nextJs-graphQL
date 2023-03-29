@@ -4,10 +4,10 @@ import Head from "next/head";
 import Books from "@/components/Books";
 import client from "../../apolloClientIntercept";
 import { Login_User_Books, Shelve_By_Status } from "@/services/query/books";
-import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 
 const ViewBooks = ({ data }: any) => {
+  const [selectedIndex, setSelectedIndex] = useState(1);
   const [data1, setData] = useState<any>(data);
 
   const getAll = async () => {
@@ -19,6 +19,10 @@ const ViewBooks = ({ data }: any) => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleTabClick = (index:any) => {
+    setSelectedIndex(index);
   };
 
   const Shelve_By_Status_Record = async (status: any) => {
@@ -50,25 +54,34 @@ const ViewBooks = ({ data }: any) => {
         <Tabs defaultIndex={1} style={{ marginTop: "40px" }}>
           <TabList className="flex border-b border-gray-200">
             <Tab
-              className="py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none"
+             className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
+              selectedIndex === 0 ? "bg-gray-200" : ""
+            }`}
               onClick={() => {
                 Shelve_By_Status_Record("Want to Read");
+                handleTabClick(0);
               }}
             >
               Want to Read
             </Tab>
             <Tab
-              className="py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none"
+             className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
+              selectedIndex === 1 ? "bg-gray-200" : ""
+            }`}
               onClick={() => {
                 Shelve_By_Status_Record("Reading");
+                handleTabClick(1);
               }}
             >
               Reading
             </Tab>
             <Tab
-              className="py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none"
+           className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
+            selectedIndex === 2 ? "bg-gray-200" : ""
+          }`}
               onClick={() => {
                 Shelve_By_Status_Record("Read");
+                handleTabClick(2);
               }}
             >
               Read

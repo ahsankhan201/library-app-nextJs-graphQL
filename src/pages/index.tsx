@@ -60,7 +60,7 @@ export default function Home() {
           }}
         >
           <div style={{ marginTop: "150px" }}>
-            <table>
+          <table className="w-full">
               <thead>
                 <tr>
                   <th>Cover</th>
@@ -76,48 +76,43 @@ export default function Home() {
                   console.log("user", user);
                   return (
                     <tr>
-                      <td>
+                      <td className="text-center">
                         <img
+                        className="m-auto"
                           src={`${Get_Image_Url}${user?.cover_Image}`}
                           alt="cover"
                           width="100"
-                          height="150"
+                          max-height="150"
                         />
                       </td>
-                      <td>
-                        {user?.title}
-                        {user?.average_rating}
-                      </td>
-                      <td>{user?.author}</td>
-                      <td>
+                      <td className="text-center">{user?.title}</td>
+                      <td className="text-center">{user?.author}</td>
+                      <td className="text-center">
                         <ReactStars
-                          count={5}
+                          count={user[0]?.stars}
                           size={24}
-                          color1="grey"
                           color2={"#ffd700"}
-                          edit={false}
-                          value={
-                            user?.average_rating ? user?.average_rating : 0
-                          }
                         />
                       </td>
 
-                      <td>
-                        {user?.date &&
-                          new Date(JSON.parse(user.date)).toLocaleString()}
-                      </td>
+                      <td className="text-center">{user?.date}</td>
+                      <td className="text-center">
                       <select
                         onChange={(event) => Set_TheSelve(event, user?._id)}
                       >
                         <option value="Want to read">Want to read</option>
-                        <option value="Reading">Reading</option>
+                        <option value="Reading">
+                        Reading
+                        </option>
                         <option value="Read">Read</option>
                       </select>
+                      </td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
+
           </div>
         </div>
       </main>

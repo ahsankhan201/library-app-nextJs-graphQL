@@ -13,17 +13,10 @@ export default function BookDetail() {
 
   const getBookById = async () => {
    
-    const token1 = token?.replace(/"/g, "");
     console.log(router.query.id);
     const book=boodId.toString()
     const { data } = await  client.mutate({
-      mutation: Get_Book_ById_Query,
-      context: {
-        headers: {
-          Authorization: `Bearer ${token1}`,
-        },
-      },
-    
+      mutation: Get_Book_ById_Query,     
       variables: { bookId:book },
     });
     setBookdetail(data.book);

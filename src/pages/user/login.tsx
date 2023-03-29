@@ -53,10 +53,12 @@ export default function LoginPage() {
       <div className="flex justify-center items-center h-screen">
         <div className="w-screen md:w-96 p-4 md:p-0">
           <h1 className="text-4xl text-center font-bold mb-2.5">
-            {/* {t("GOODREADS")} */}
+          GOODREADS
+            {/* {/ {t("GOODREADS")} /} */}
           </h1>
           <h1 className="text-4xl text-center font-bold mb-2.5">
-            {/* {t("SIGN_IN")} */}
+          SIGN_IN
+            {/* {/ {t("SIGN_IN")} /} */}
           </h1>
           <form onSubmit={handleFormSubmit}>
             <div className="mb-4">
@@ -64,7 +66,8 @@ export default function LoginPage() {
                 htmlFor="email"
                 className="text-gray-700 block font-bold mb-2"
               >
-                {/* {t("EMAIL")} */}
+                EMAIL
+                {/* {/ {t("EMAIL")} /} */}
               </label>
 
               <input
@@ -79,10 +82,12 @@ export default function LoginPage() {
             <div className="mb-4">
               <div className="mb-2 flex justify-between items-center">
                 <label htmlFor="password" className="text-gray-700 font-bold">
-                  {/* {t("PASSWORD")} */}
+                PASSWORD
+                  {/* {/ {t("PASSWORD")} /} */}
                 </label>
                 <a href="#" className="underline">
-                  {/* {t("FORGOT_PASSWORD")} */}
+                FORGOT_PASSWORD
+                  {/* {/ {t("FORGOT_PASSWORD")} /} */}
                 </a>
               </div>
               <input
@@ -96,20 +101,24 @@ export default function LoginPage() {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-500 h-9 text-white py-2 px-4 rounded-3xl hover:bg-blue-600"
+              className="w-full bg-blue-500 h-9 text-white px-4 rounded-3xl hover:bg-blue-600"
             >
-              {/* {t("SIGN_IN")} */}
+              SIGN_IN
+
+              {/* {/ {t("SIGN_IN")} /} */}
             </button>
           </form>
           <div>
-            <div className={styles.divider}>
-              <p className="mt-4 z-10 px-2 text-center">
-                {/* {t("DONT_HAVE_ACCOUNT")} */}
+            <section className={styles.divider}>
+              <p className="mt-8 z-10 px-2 text-center">
+              DONT_HAVE_ACCOUNT
+                {/* {/ {t("DONT_HAVE_ACCOUNT")} /} */}
               </p>
-            </div>
+            </section>
             <Link href="/user/register">
-              <button className="w-full bg-blue-500 h-9 text-white py-2 px-4 rounded-3xl hover:bg-blue-600">
-                {/* {t("SIGN_UP")} */}
+              <button className="w-full border-2 mt-4 h-9 px-4 rounded-3xl hover:bg-gray-200">
+              SIGN_UP
+                {/* {/ {t("SIGN_UP")} /} */}
               </button>
             </Link>
           </div>
