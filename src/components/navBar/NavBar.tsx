@@ -41,7 +41,7 @@ const Navbar = () => {
           </li>
           {user?.role == "Admin" && (
             <li>
-              <Link href="/newBook">Add Book</Link>
+              <Link href="/newBook">Add New Book</Link>
             </li>
           )}
 

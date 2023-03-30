@@ -10,15 +10,13 @@ import { Get_Image_Url } from "environment";
 import Ratings from "@/components/ratings";
 import { Modal } from "@nextui-org/react";
 import EditPage from "@/components/EditBook";
+import { io } from "socket.io-client";
 
-export default function Home({socket}:any) {
+export default function Home({ socket }: any) {
   const router = useRouter();
   const [data1, setData] = useState<any>();
   const [showModal, setShowModal] = useState(false);
-  const [socketData,setSocketData] = useState<any>();
-
-
-
+  const [socketData, setSocketData] = useState<any>();
 
   const getAllBooks = async () => {
     try {
@@ -26,8 +24,6 @@ export default function Home({socket}:any) {
         mutation: Get_All_Books_Query,
       });
       setData(data.books);
-      
-     
     } catch (error) {
       console.error(error);
     }
@@ -60,20 +56,25 @@ export default function Home({socket}:any) {
       return;
     }
     getAllBooks();
-    console.log("socket data",data1)
+    console.log("socket data", data1);
   }, []);
 
-
-  // useEffect(()=>{
-  //  socket && socket?.on("book-rating", (data:any) => {
-  //     console.log("socket data",data);
-  //     setSocketData(data.book)
-  //   }).then((data:any)=>{
-  //     console.log("data1",data1)
-  //   })
-  //  console.log(data1)
-  // },[socket])
-
+  useEffect(() => {
+    const socket = io("http://localhost:5000");
+    socket?.on("book-rating", (data: any) => {
+      setData((prevData: any[]) => {
+        const updatedData = prevData.map((item: any) => {
+          if (item._id === data.book._id) {
+            return { ...item, average_rating: data.book.average_rating };
+          }
+          return item;
+        });
+        return updatedData;
+      });
+      console.log("data1212232332", data);
+    });
+  }, []);
+  
 
   return (
     <>

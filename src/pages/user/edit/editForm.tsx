@@ -31,7 +31,7 @@ const editForm = ({ userid }: Props) => {
     const { data } = await client.mutate({
       mutation: Rate_Specific_Book,
       variables: {
-        rating: { book_id: userid, stars: stars.toString(), comment },
+        rating: { book_id: userid, stars: stars, comment },
       },
     });
   };
@@ -56,7 +56,8 @@ const editForm = ({ userid }: Props) => {
           <p>My Rating</p>
           <ReactStars
             onChange={(event: any) => {
-              setStars(event);
+              const stars= event;
+              setStars(stars.toString());
             }}
             count={5}
             size={24}

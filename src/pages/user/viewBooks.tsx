@@ -58,30 +58,41 @@ const ViewBooks = ({ data, socket }: any) => {
                 selectedIndex === 0 ? "bg-gray-200" : ""
               }`}
               onClick={() => {
-                Shelve_By_Status_Record("Want to Read");
+                getAll();
                 handleTabClick(0);
               }}
             >
-              Want to Read
+              All
             </Tab>
             <Tab
               className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
                 selectedIndex === 1 ? "bg-gray-200" : ""
               }`}
               onClick={() => {
-                Shelve_By_Status_Record("Reading");
+                Shelve_By_Status_Record("Want to Read");
                 handleTabClick(1);
               }}
             >
-              Reading
+              Want to Read
             </Tab>
             <Tab
               className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
                 selectedIndex === 2 ? "bg-gray-200" : ""
               }`}
               onClick={() => {
-                Shelve_By_Status_Record("Read");
+                Shelve_By_Status_Record("Reading");
                 handleTabClick(2);
+              }}
+            >
+              Reading
+            </Tab>
+            <Tab
+              className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
+                selectedIndex === 3 ? "bg-gray-200" : ""
+              }`}
+              onClick={() => {
+                Shelve_By_Status_Record("Read");
+                handleTabClick(3);
               }}
             >
               Read

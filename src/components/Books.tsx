@@ -11,25 +11,33 @@ interface Props {
   data1: any;
   socket: any;
   setData: any;
-
 }
 
-export default function books({ data1,socket }: Props) {
+export default function books({ data1, socket,setData }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState<any>(data1);
-  const [socketData,setSocketData] = useState<any>();
-
+  const [socketData, setSocketData] = useState<any>();
 
   useEffect(() => {
-    setSelectedBook(data1);
-   socket?.on("book-rating", (data:any) => {
-      console.log("data", data);
-      data1.map((item:any)=>{
-        console.log("")
-      })
+    setData((prevData: any[]) => {
+      const updatedData = prevData?.map((item: any) => {
+        if (item.book._id === socketData?.book._id) {
+          return { ...item, average_rating: socketData?.book.average_rating };
+        }
+        return item;
+      });
+      return updatedData;
     });
+  }, [setData, socketData]);
+
+  useEffect(() => {
+    socket?.on("book-rating", (data: any) => {
+      console.log("socket data", data)
+      setSocketData(data);
+    });
+    setSelectedBook(data1);
   }, [data1, socket]);
-  
+    
 
   const handleEditClick = () => {
     setShowModal(true);
@@ -69,8 +77,8 @@ export default function books({ data1,socket }: Props) {
         </tr>
       </thead>
       <tbody>
-        {data1?.map((user: any) => {
-          console.log("user", user);
+        {selectedBook?.map((user: any) => {
+        
           return (
             <tr>
               <td className="text-center">
@@ -88,7 +96,10 @@ export default function books({ data1,socket }: Props) {
                 <Ratings user={user} />
               </td>
               <td>
-                <select value={user.status} onChange={(event) => Set_TheSelve(event, user?.book_id)}>
+                <select
+                  value={user.status}
+                  onChange={(event) => Set_TheSelve(event, user?.book_id)}
+                >
                   <option value="Want to read">Want to read</option>
                   <option value="Reading">Reading</option>
                   <option value="Read">Read</option>
