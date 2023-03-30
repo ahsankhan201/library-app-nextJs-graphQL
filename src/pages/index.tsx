@@ -15,19 +15,10 @@ export default function Home({socket}:any) {
   const router = useRouter();
   const [data1, setData] = useState<any>();
   const [showModal, setShowModal] = useState(false);
+  const [socketData,setSocketData] = useState<any>();
 
 
-  // useEffect(()=>{
-  //   socket?.on("book-rating", (data:any) => {
-  //     console.log("socket data",data);
-  //     data1.map((book:any)=>{
-  //       if(book.id === data.book._id){
-  //         console.log("book",book)
-  //         book.ratings = data.ratings;
-  //       }
-  //     })
-  //   });
-  // },[socket])
+
 
   const getAllBooks = async () => {
     try {
@@ -35,6 +26,8 @@ export default function Home({socket}:any) {
         mutation: Get_All_Books_Query,
       });
       setData(data.books);
+      
+     
     } catch (error) {
       console.error(error);
     }
@@ -67,7 +60,20 @@ export default function Home({socket}:any) {
       return;
     }
     getAllBooks();
+    console.log("socket data",data1)
   }, []);
+
+
+  // useEffect(()=>{
+  //  socket && socket?.on("book-rating", (data:any) => {
+  //     console.log("socket data",data);
+  //     setSocketData(data.book)
+  //   }).then((data:any)=>{
+  //     console.log("data1",data1)
+  //   })
+  //  console.log(data1)
+  // },[socket])
+
 
   return (
     <>

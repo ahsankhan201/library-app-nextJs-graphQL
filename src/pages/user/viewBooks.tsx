@@ -6,22 +6,9 @@ import client from "../../apolloClientIntercept";
 import { Login_User_Books, Shelve_By_Status } from "@/services/query/books";
 import { useState, useEffect } from "react";
 
-const ViewBooks = ({ data ,socket}: any) => {
+const ViewBooks = ({ data, socket }: any) => {
   const [selectedIndex, setSelectedIndex] = useState(1);
   const [data1, setData] = useState<any>(data);
-
-  useEffect(()=>{
-    socket?.on("book-rating", (data:any) => {
-      console.log("socket data",data);
-      data1.map((book:any)=>{
-        if(book.id === data.book._id){
-          console.log("book",book)
-          book.ratings = data.ratings;
-        }
-      })
-
-    });
-  },[socket])
 
   const getAll = async () => {
     try {
@@ -34,7 +21,7 @@ const ViewBooks = ({ data ,socket}: any) => {
     }
   };
 
-  const handleTabClick = (index:any) => {
+  const handleTabClick = (index: any) => {
     setSelectedIndex(index);
   };
 
@@ -55,7 +42,7 @@ const ViewBooks = ({ data ,socket}: any) => {
 
   useEffect(() => {
     getAll();
-  }, []);
+  }, [socket]);
 
   return (
     <>
@@ -67,9 +54,9 @@ const ViewBooks = ({ data ,socket}: any) => {
         <Tabs defaultIndex={1} style={{ marginTop: "40px" }}>
           <TabList className="flex border-b border-gray-200">
             <Tab
-             className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
-              selectedIndex === 0 ? "bg-gray-200" : ""
-            }`}
+              className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
+                selectedIndex === 0 ? "bg-gray-200" : ""
+              }`}
               onClick={() => {
                 Shelve_By_Status_Record("Want to Read");
                 handleTabClick(0);
@@ -78,9 +65,9 @@ const ViewBooks = ({ data ,socket}: any) => {
               Want to Read
             </Tab>
             <Tab
-             className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
-              selectedIndex === 1 ? "bg-gray-200" : ""
-            }`}
+              className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
+                selectedIndex === 1 ? "bg-gray-200" : ""
+              }`}
               onClick={() => {
                 Shelve_By_Status_Record("Reading");
                 handleTabClick(1);
@@ -89,9 +76,9 @@ const ViewBooks = ({ data ,socket}: any) => {
               Reading
             </Tab>
             <Tab
-           className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
-            selectedIndex === 2 ? "bg-gray-200" : ""
-          }`}
+              className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
+                selectedIndex === 2 ? "bg-gray-200" : ""
+              }`}
               onClick={() => {
                 Shelve_By_Status_Record("Read");
                 handleTabClick(2);
@@ -101,13 +88,13 @@ const ViewBooks = ({ data ,socket}: any) => {
             </Tab>
           </TabList>
           <TabPanel>
-            <Books data1={data1} />
+            <Books data1={data1} socket={socket} setData={setData} />
           </TabPanel>
           <TabPanel>
-            <Books data1={data1} />
+            <Books data1={data1} socket={socket} setData={setData} />
           </TabPanel>
           <TabPanel>
-            <Books data1={data1} />
+            <Books data1={data1} socket={socket} setData={setData} />
           </TabPanel>
         </Tabs>
       </div>

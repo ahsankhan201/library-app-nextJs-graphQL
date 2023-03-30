@@ -9,15 +9,27 @@ import { Set_The_Selves } from "@/services/query/books";
 
 interface Props {
   data1: any;
+  socket: any;
+  setData: any;
+
 }
 
-export default function books({ data1 }: Props) {
+export default function books({ data1,socket }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState<any>(data1);
+  const [socketData,setSocketData] = useState<any>();
+
 
   useEffect(() => {
     setSelectedBook(data1);
-  }, [data1]);
+   socket?.on("book-rating", (data:any) => {
+      console.log("data", data);
+      data1.map((item:any)=>{
+        console.log("")
+      })
+    });
+  }, [data1, socket]);
+  
 
   const handleEditClick = () => {
     setShowModal(true);
@@ -76,7 +88,7 @@ export default function books({ data1 }: Props) {
                 <Ratings user={user} />
               </td>
               <td>
-                <select value={user.status} onChange={(event) => Set_TheSelve(event, user?._id)}>
+                <select value={user.status} onChange={(event) => Set_TheSelve(event, user?.book_id)}>
                   <option value="Want to read">Want to read</option>
                   <option value="Reading">Reading</option>
                   <option value="Read">Read</option>

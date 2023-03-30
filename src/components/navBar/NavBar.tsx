@@ -45,20 +45,7 @@ const Navbar = () => {
             </li>
           )}
 
-          {/* {AllRoutes.map((route: any, index: any) => {
-            if (
-              (route.name == "Add Book" || route.name == "New Book") &&
-              user?.role != "Admin"
-            ) {
-              return null;
-            } else {
-              return (
-                <li key={index}>
-                  <Link href={route.route}>{route.name}</Link>
-                </li>
-              );
-            }
-          })} */}
+        
         </ul>
         <div className="h-full">
           <select

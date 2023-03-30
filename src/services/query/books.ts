@@ -69,7 +69,18 @@ query Query($status: String!) {
   shelveByStatus(status: $status) {
     _id
     average_rating
+
     book_id
+    status
+    user_id
+    book {
+      _id
+      author
+      average_rating
+      cover_Image
+      date
+      title
+    }
     ratings {
       user_id
       stars
@@ -77,8 +88,6 @@ query Query($status: String!) {
       book_id
       _id
     }
-    user_id
-    status
   }
 }
 `
