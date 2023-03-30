@@ -3,8 +3,13 @@ import { useState } from "react";
 import client from "../apolloClientIntercept";
 import { convertImageToBase64 } from "@/utils/utils";
 import { Create_Book_Mutation } from "@/services/query/books";
+import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
 
 export default function NewBook({}) {
+  const { t } = useTranslation();
+  const router = useRouter();
   const [book, setBook] = useState({
     title: "",
     author: "",
@@ -24,21 +29,23 @@ export default function NewBook({}) {
     event.preventDefault();
     try {
       if (!book.coverImage) {
-        console.log("No image selected");
         return;
       }
-      const coverImageBase64 = await convertImageToBase64(book?.coverImage);
+      const coverImageBase64 = book.coverImage ? await convertImageToBase64(book?.coverImage) : null;
       const { data } = await client.mutate({
         mutation: Create_Book_Mutation,
         variables: {
           book: {
             title: book.title,
             author: book.author,
-            cover_Image: coverImageBase64,
+            cover_Image: coverImageBase64 ? coverImageBase64 : null,
           },
         },
       });
+      router.push("/");
+      
     } catch (error) {
+      toast("Something went wrong")
       console.error(error);
     }
   };
@@ -51,7 +58,9 @@ export default function NewBook({}) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <div>
-        <h1 className="mt-8 text-center text-4xl font-bold">Add New Book</h1>
+        <h1 className="mt-8 text-center text-4xl font-bold">
+          {t("add-new-book")}
+        </h1>
         <form
           onSubmit={handleSubmit}
           encType="multipart/form-data"
@@ -59,7 +68,8 @@ export default function NewBook({}) {
         >
           <div className="mb-4">
             <label htmlFor="title" className="block font-medium text-gray-700">
-              Title:
+            {t("TITLE")}:
+            
             </label>
             <input
               type="text"
@@ -74,7 +84,7 @@ export default function NewBook({}) {
 
           <div className="mb-4">
             <label htmlFor="author" className="block font-medium text-gray-700">
-              Author:
+            {t("AUTHOR")}:
             </label>
             <input
               type="text"
@@ -92,7 +102,7 @@ export default function NewBook({}) {
               htmlFor="cover-image"
               className="block font-medium text-gray-700"
             >
-              Cover Image:
+                {t("CoverImage")}:
             </label>
             <div className="flex mt-2 items-center justify-between">
               <input
@@ -106,11 +116,12 @@ export default function NewBook({}) {
                 type="submit"
                 className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 cursor-pointer"
               >
-                Add Book
+                {t("AddBook")}:
               </button>
             </div>
           </div>
         </form>
+        <Toaster />
       </div>
     </>
   );

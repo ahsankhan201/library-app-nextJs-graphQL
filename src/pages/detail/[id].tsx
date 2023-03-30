@@ -11,7 +11,6 @@ export default function BookDetail() {
   const [bookDetail, setBookdetail] = useState<any>();
 
   const getBookById = async () => {
-    console.log(router.query.id);
     const book = boodId.toString();
     const { data } = await client.mutate({
       mutation: Get_Book_ById_Query,

@@ -3,20 +3,22 @@ import styles from "@/styles/Home.module.css";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
-
+import { AiOutlineEdit } from 'react-icons/ai';
 import { Get_All_Books_Query, Set_The_Selves } from "@/services/query/books";
 import client from "@/apolloClientIntercept";
-import { Get_Image_Url } from "environment";
+import { Get_Image_Url, Socket_Url } from "environment";
 import Ratings from "@/components/ratings";
 import { Modal } from "@nextui-org/react";
 import EditPage from "@/components/EditBook";
 import { io } from "socket.io-client";
+import toast, { Toaster } from "react-hot-toast";
+import { useTranslation } from "next-i18next";
 
 export default function Home({ socket }: any) {
+  const { t } = useTranslation();
   const router = useRouter();
   const [data1, setData] = useState<any>();
   const [showModal, setShowModal] = useState(false);
-  const [socketData, setSocketData] = useState<any>();
 
   const getAllBooks = async () => {
     try {
@@ -38,7 +40,7 @@ export default function Home({ socket }: any) {
         },
       });
     } catch (error) {
-      console.error(error);
+      toast("Something went wrong");
     }
   };
 
@@ -56,11 +58,10 @@ export default function Home({ socket }: any) {
       return;
     }
     getAllBooks();
-    console.log("socket data", data1);
   }, []);
 
   useEffect(() => {
-    const socket = io("http://localhost:5000");
+    const socket = io(Socket_Url);
     socket?.on("book-rating", (data: any) => {
       setData((prevData: any[]) => {
         const updatedData = prevData.map((item: any) => {
@@ -71,10 +72,8 @@ export default function Home({ socket }: any) {
         });
         return updatedData;
       });
-      console.log("data1212232332", data);
     });
   }, []);
-  
 
   return (
     <>
@@ -85,26 +84,22 @@ export default function Home({ socket }: any) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div
-          style={{
-            marginTop: "60px",
-          }}
-        >
-          <div style={{ marginTop: "150px" }}>
+        <div>
+          <div>
             <table className="w-full">
               <thead>
                 <tr>
-                  <th>Cover</th>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th>Average rating</th>
-                  <th>Date added</th>
-                  <th>Actions</th>
+                  <th> {t("COVER")}</th>
+                  <th>{t("TITLE")}</th>
+                  <th>{t("AUTHOR")}</th>
+                  <th>{t("AVARAGE_RATING")}</th>
+                  <th>{t("DATE_ADDED")}</th>
+                  <th>{t("Actions")}</th>
                 </tr>
               </thead>
               <tbody>
                 {data1?.map((user: any) => {
-                  console.log("user", user);
+                  console.log(user)
                   return (
                     <tr>
                       <td className="text-center">
@@ -125,27 +120,30 @@ export default function Home({ socket }: any) {
                       <td className="text-center">{user?.date}</td>
                       <td className="text-center">
                         <div className="flex justify-around">
-                        <select
-                        className="border rounded"
-                          onChange={(event) => Set_TheSelve(event, user?._id)}
-                        >
-                          <option value="Want to read">Want to read</option>
-                          <option value="Reading">Reading</option>
-                          <option value="Read">Read</option>
-                        </select>
-                        <h2 onClick={handleEditClick}>Edit</h2>
-                        <Modal
-                          width="80%"
-                          open={showModal}
-                          onClose={handleModalClose}
-                          aria-labelledby="modal-title"
-                          aria-describedby="modal-description"
-                        >
-                          <EditPage
-                            userData={user}
-                            setShowModal={setShowModal}
-                          />
-                        </Modal>
+                          <select
+                          value={user?.status}
+                            className="border rounded"
+                            onChange={(event) => Set_TheSelve(event, user?._id)}
+                          >
+                            <option value="Want to read">Want to read</option>
+                            <option value="Reading">Reading</option>
+                            <option value="Read">Read</option>
+                          </select>
+                          <h2 onClick={handleEditClick}>
+                          <AiOutlineEdit size={32} color="black" />
+                          </h2>
+                          <Modal
+                            width="80%"
+                            open={showModal}
+                            onClose={handleModalClose}
+                            aria-labelledby="modal-title"
+                            aria-describedby="modal-description"
+                          >
+                            <EditPage
+                              userData={user}
+                              setShowModal={setShowModal}
+                            />
+                          </Modal>
                         </div>
                       </td>
                     </tr>
@@ -153,6 +151,7 @@ export default function Home({ socket }: any) {
                 })}
               </tbody>
             </table>
+            <Toaster />
           </div>
         </div>
       </main>

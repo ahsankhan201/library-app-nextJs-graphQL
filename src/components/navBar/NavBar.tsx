@@ -1,9 +1,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import AllRoutes from "../../constants/AllRoutes";
 import { useTranslation } from "react-i18next";
 import i18n from "i18next";
-import router from "next/router";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 const Navbar = () => {
@@ -21,7 +19,6 @@ const Navbar = () => {
   useEffect(() => {
     const user:any = Cookies.get("user");
     setUser(JSON.parse(user));
-    console.log("user", user);
   }, [user.role]);
   const logout = () => {
     Cookies.remove("token");
@@ -34,14 +31,16 @@ const Navbar = () => {
       <div className="flex justify-between items-center w-full">
         <ul className="">
           <li>
-            <Link href="/">Home</Link>
+            <Link href="/">  {t("HOME")} </Link>
           </li>
           <li>
-            <Link href="/user/viewBooks">MyBooks</Link>
+            <Link href="/user/viewBooks"> {t("MYBOOKS")}</Link>
           </li>
           {user?.role == "Admin" && (
             <li>
-              <Link href="/newBook">Add New Book</Link>
+              <Link href="/newBook">
+                {t("Add_NewBook")}
+              </Link>
             </li>
           )}
 
@@ -62,7 +61,7 @@ const Navbar = () => {
             className="ml-2 rounded-full text-white px-4 p-2 bg-blue-500 hover:bg-blue-600"
             onClick={logout}
           >
-            logout
+            {t("logout")}
           </button>
         </div>
       </div>

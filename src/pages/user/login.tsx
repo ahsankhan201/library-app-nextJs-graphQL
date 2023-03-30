@@ -7,6 +7,8 @@ import styles from "@/styles/Register.module.css";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { LOGIN_MUTATION } from "@/services/query/user";
+import toast, { Toaster } from 'react-hot-toast';
+
 
 export default function LoginPage() {
   const { t } = useTranslation();
@@ -16,6 +18,7 @@ export default function LoginPage() {
 
   const handleSubmit = useCallback(async () => {
     try {
+      if (!email || !password) return alert("Please fill all fields");
       const { data } = await client.mutate({
         mutation: LOGIN_MUTATION,
         variables: {
@@ -26,7 +29,8 @@ export default function LoginPage() {
       Cookies.set("token", JSON.stringify(data.login.token));
       router.push("/");
     } catch (error) {
-      console.error(error);
+      toast("User OR Password is incorrect")
+   
     }
   }, [email, password]);
 
@@ -38,7 +42,6 @@ export default function LoginPage() {
     [handleSubmit]
   );
 
-
   return (
     <>
       <Head>
@@ -47,12 +50,10 @@ export default function LoginPage() {
       <div className="flex justify-center items-center h-screen">
         <div className="w-screen md:w-96 p-4 md:p-0">
           <h1 className="text-4xl text-center font-bold mb-2.5">
-          GOODREADS
-            {/* {/ {t("GOODREADS")} /} */}
+            {t("GOODREADS")}
           </h1>
           <h1 className="text-4xl text-center font-bold mb-2.5">
-          SIGN_IN
-            {/* {/ {t("SIGN_IN")} /} */}
+            {t("SIGN_IN")}
           </h1>
           <form onSubmit={handleFormSubmit}>
             <div className="mb-4">
@@ -60,8 +61,7 @@ export default function LoginPage() {
                 htmlFor="email"
                 className="text-gray-700 block font-bold mb-2"
               >
-                EMAIL
-                {/* {/ {t("EMAIL")} /} */}
+                {t("EMAIL")}
               </label>
 
               <input
@@ -76,12 +76,10 @@ export default function LoginPage() {
             <div className="mb-4">
               <div className="mb-2 flex justify-between items-center">
                 <label htmlFor="password" className="text-gray-700 font-bold">
-                PASSWORD
-                  {/* {/ {t("PASSWORD")} /} */}
+                  {t("PASSWORD")}
                 </label>
                 <a href="#" className="underline">
-                FORGOT_PASSWORD
-                  {/* {/ {t("FORGOT_PASSWORD")} /} */}
+                  {t("FORGOT_PASSWORD")}
                 </a>
               </div>
               <input
@@ -97,25 +95,23 @@ export default function LoginPage() {
               type="submit"
               className="w-full bg-blue-500 h-9 text-white px-4 rounded-3xl hover:bg-blue-600"
             >
-              SIGN_IN
-
-              {/* {/ {t("SIGN_IN")} /} */}
+              {t("SIGN_IN")}
             </button>
           </form>
           <div>
             <section className={styles.divider}>
               <p className="mt-8 z-10 px-2 text-center">
-              DONT_HAVE_ACCOUNT
-                {/* {/ {t("DONT_HAVE_ACCOUNT")} /} */}
+                DONT_HAVE_ACCOUNT
+                {t("DONT_HAVE_ACCOUNT")}
               </p>
             </section>
             <Link href="/user/register">
               <button className="w-full border-2 mt-4 h-9 px-4 rounded-3xl hover:bg-gray-200">
-              SIGN_UP
-                {/* {/ {t("SIGN_UP")} /} */}
+                {t("SIGN_IN")}
               </button>
             </Link>
           </div>
+          <Toaster />
         </div>
       </div>
     </>

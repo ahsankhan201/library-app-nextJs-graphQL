@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import client from "../../apolloClientIntercept";
 import { Register_MUTATION } from "@/services/query/user";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Register() {
   const router = useRouter();
@@ -14,14 +15,17 @@ export default function Register() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
+      if(!email || !password || !name) {
+        toast("Kindly fill all fields")
+      }
       const { data } = await client.mutate({
         mutation: Register_MUTATION,
         variables: { user: { email, password, name } },
       });
-      console.log("Success!", data);
       router.push("/user/login");
     } catch (error) {
-      console.error(error);
+      toast("Something went wrong")
+  
     }
   }
 
@@ -115,6 +119,7 @@ export default function Register() {
             <a href="https://www.goodreads.com/about/privacy">Privacy Policy</a>
           </div>
         </div>
+        <Toaster />
       </div>
     </>
   );

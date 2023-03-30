@@ -3,35 +3,37 @@ import { useEffect, useState } from "react";
 import client from "../apolloClientIntercept";
 import { convertImageToBase64 } from "@/utils/utils";
 import { useRouter } from "next/router";
-import {
-  Update_Book_By_Admin,
-} from "@/services/query/books";
+import { Update_Book_By_Admin } from "@/services/query/books";
 
-export default function EditBook({ userData,setShowModal }: any) {
+export default function EditBook({ userData, setShowModal }: any) {
   const router = useRouter();
   const [fileChange, setFileChange] = useState(false);
   const [book, setBook] = useState({
     title: userData.title,
     author: userData.author,
-    coverImage: userData.coverImage,
+    coverImage: userData.cover_Image,
     bookId: userData._id,
   });
 
-  const handleInputChange = (
+  const handleInputChange =async (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | any | File
     >
   ) => {
     const { name, value, files } = event.target;
-    setBook((prevState) => ({ ...prevState, [name]: files?.[0] || value }));
-    setFileChange(true);
+    if (files) {
+      const base64Image = await convertImageToBase64(files?.[0]);
+      console.log("base64Image", base64Image)
+      setBook((prevState) => ({ ...prevState, [name]: base64Image }));
+    } else {
+      setBook((prevState) => ({ ...prevState, [name]: value }));
+    }
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const coverImageBase64 = await convertImageToBase64(book?.coverImage);
-
+      console.log(userData)
       const { data } = await client.mutate({
         mutation: Update_Book_By_Admin,
         variables: {
@@ -39,15 +41,15 @@ export default function EditBook({ userData,setShowModal }: any) {
           book: {
             title: book.title,
             author: book.author,
-            cover_Image: fileChange ? coverImageBase64 : undefined,
+            cover_Image: book.coverImage,
           },
         },
       });
-      if(data){
+      if (data) {
         setShowModal(false);
-        router.push("/")
+        router.push("/");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
     }
   };
