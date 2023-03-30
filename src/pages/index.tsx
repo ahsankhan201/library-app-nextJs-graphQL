@@ -11,12 +11,25 @@ import Ratings from "@/components/ratings";
 import { Modal } from "@nextui-org/react";
 import EditPage from "@/components/EditBook";
 
-export default function Home() {
+export default function Home({socket}:any) {
   const router = useRouter();
   const [data1, setData] = useState<any>();
   const [showModal, setShowModal] = useState(false);
 
-  const getAll = async () => {
+
+  // useEffect(()=>{
+  //   socket?.on("book-rating", (data:any) => {
+  //     console.log("socket data",data);
+  //     data1.map((book:any)=>{
+  //       if(book.id === data.book._id){
+  //         console.log("book",book)
+  //         book.ratings = data.ratings;
+  //       }
+  //     })
+  //   });
+  // },[socket])
+
+  const getAllBooks = async () => {
     try {
       const { data } = await client.mutate({
         mutation: Get_All_Books_Query,
@@ -48,13 +61,12 @@ export default function Home() {
     setShowModal(false);
   };
 
-
   useEffect(() => {
     if (!Cookies.get("user")) {
       router.push("/user/login");
       return;
     }
-    getAll();
+    getAllBooks();
   }, []);
 
   return (
@@ -120,7 +132,10 @@ export default function Home() {
                           aria-labelledby="modal-title"
                           aria-describedby="modal-description"
                         >
-                          <EditPage userData={user} setShowModal={setShowModal} />
+                          <EditPage
+                            userData={user}
+                            setShowModal={setShowModal}
+                          />
                         </Modal>
                       </td>
                     </tr>

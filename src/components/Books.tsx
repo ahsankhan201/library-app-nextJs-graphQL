@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { Get_Image_Url } from "environment";
 import Ratings from "./ratings";
 import EditForm from "../pages/user/edit/editForm";
+import client from "@/apolloClientIntercept";
+import { Set_The_Selves } from "@/services/query/books";
 
 interface Props {
   data1: any;
@@ -19,6 +21,19 @@ export default function books({ data1 }: Props) {
 
   const handleEditClick = () => {
     setShowModal(true);
+  };
+
+  const Set_TheSelve = async (event: any, book_id: any) => {
+    try {
+      const { data } = await client.mutate({
+        mutation: Set_The_Selves,
+        variables: {
+          shelve: { book_id, status: event.target.value },
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleModalClose = () => {
@@ -49,21 +64,31 @@ export default function books({ data1 }: Props) {
               <td className="text-center">
                 <img
                   className="m-auto"
-                  src={`${Get_Image_Url}${user?.cover_Image}`}
+                  src={`${Get_Image_Url}${user?.book?.cover_Image}`}
                   alt="cover"
                   width="100"
                   max-height="150"
                 />
               </td>
-              <td className="text-center">{user?.book_id}</td>
-              <td className="text-center">{user?.user_id}</td>
+              <td className="text-center">{user?.book?.title}</td>
+              <td className="text-center">{user?.book?.author}</td>
               <td className="text-center">
                 <Ratings user={user} />
+              </td>
+              <td>
+                <select value={user.status} onChange={(event) => Set_TheSelve(event, user?._id)}>
+                  <option value="Want to read">Want to read</option>
+                  <option value="Reading">Reading</option>
+                  <option value="Read">Read</option>
+                </select>
               </td>
 
               <td className="text-center">
                 <div>
-                  <h2 onClick={handleEditClick}>Edit</h2>
+                  {user?.status == "Read" ? (
+                    <h2 onClick={handleEditClick}>Review</h2>
+                  ) : null}
+
                   <Modal
                     width="80%"
                     open={showModal}

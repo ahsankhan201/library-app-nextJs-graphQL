@@ -11,9 +11,8 @@ import { LOGIN_MUTATION } from "@/services/query/user";
 export default function LoginPage() {
   const { t } = useTranslation();
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const handleSubmit = useCallback(async () => {
     try {
@@ -25,11 +24,9 @@ export default function LoginPage() {
       });
       Cookies.set("user", JSON.stringify(data.login.user));
       Cookies.set("token", JSON.stringify(data.login.token));
-      setAuthenticated(true);
       router.push("/");
     } catch (error) {
       console.error(error);
-      setAuthenticated(false);
     }
   }, [email, password]);
 
@@ -41,9 +38,6 @@ export default function LoginPage() {
     [handleSubmit]
   );
 
-  if (authenticated) {
-    return <Link href="/">{t("back_to_homepage")}</Link>;
-  }
 
   return (
     <>

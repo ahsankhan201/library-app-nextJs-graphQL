@@ -38,12 +38,11 @@ export default function Register() {
           padding: "14px 18px",
         }}
       >
-      <Link href="/">
-      Goto Home
-      </Link>
         <div className="w-screen mx-auto p-4 md:w-96">
           <h1 className="text-4xl text-center font-bold mb-4">Goodreads</h1>
-          <h1 className="text-4xl text-center font-bold mb-4">Create Account</h1>
+          <h1 className="text-4xl text-center font-bold mb-4">
+            Create Account
+          </h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
@@ -106,17 +105,16 @@ export default function Register() {
               <button className="text-blue-500 hover:underline">Sign Up</button>
             </Link>
           </p>
-        <div
-          id="legalTextRow"
-          className="a-row a-spacing-top-medium a-size-small"
-        >
-          By creating an account, you agree to the Goodreads{" "}
-          <a href="https://www.goodreads.com/about/terms">Terms of Service</a>{" "}
-          and{" "}
-          <a href="https://www.goodreads.com/about/privacy">Privacy Policy</a>
+          <div
+            id="legalTextRow"
+            className="a-row a-spacing-top-medium a-size-small"
+          >
+            By creating an account, you agree to the Goodreads{" "}
+            <a href="https://www.goodreads.com/about/terms">Terms of Service</a>{" "}
+            and{" "}
+            <a href="https://www.goodreads.com/about/privacy">Privacy Policy</a>
+          </div>
         </div>
-        </div>
-
       </div>
     </>
   );

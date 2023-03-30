@@ -8,23 +8,20 @@ import { Get_Image_Url } from "environment";
 export default function BookDetail() {
   const router = useRouter();
   const [boodId, setBookId] = useState<any>(router.query.id);
-  const [token, setToken] = useState<any>("");
   const [bookDetail, setBookdetail] = useState<any>();
 
   const getBookById = async () => {
-   
     console.log(router.query.id);
-    const book=boodId.toString()
-    const { data } = await  client.mutate({
-      mutation: Get_Book_ById_Query,     
-      variables: { bookId:book },
+    const book = boodId.toString();
+    const { data } = await client.mutate({
+      mutation: Get_Book_ById_Query,
+      variables: { bookId: book },
     });
     setBookdetail(data.book);
   };
 
   useEffect(() => {
-    setToken(Cookies.get("token"));
-    setBookId(router.query.id)
+    setBookId(router.query.id);
     getBookById();
   }, [router.query.id]);
 
@@ -32,23 +29,23 @@ export default function BookDetail() {
     <div className="w-4/5 mx-auto mt-24">
       <div className="flex flex-row space-between">
         <div>
-          <img className="w-52" src={`${Get_Image_Url}${bookDetail?.cover_Image}`} alt="" />
+          <img
+            className="w-52"
+            src={`${Get_Image_Url}${bookDetail?.cover_Image}`}
+            alt=""
+          />
         </div>
         <div className="text-black ml-4 px-4">
           <h2 className="text-2xl font-bold mb-2">{bookDetail?.title}</h2>
           <p className="mb-2">
             by <b>{bookDetail?.author}</b>
           </p>
-          <div className="flex flex-row items-center">
-         
-          </div>
+          <div className="flex flex-row items-center"></div>
         </div>
       </div>
       <div className="mt-8">
-        <h2 className="text-2xl font-bold mb-2">{bookDetail?.date}</h2>
-     
+      {bookDetail?.date ? new Date(bookDetail?.date * 1000).toLocaleDateString() : "Unknown"}
       </div>
-    
     </div>
   );
 }

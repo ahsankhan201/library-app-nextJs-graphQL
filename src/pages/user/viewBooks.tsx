@@ -6,9 +6,22 @@ import client from "../../apolloClientIntercept";
 import { Login_User_Books, Shelve_By_Status } from "@/services/query/books";
 import { useState, useEffect } from "react";
 
-const ViewBooks = ({ data }: any) => {
+const ViewBooks = ({ data ,socket}: any) => {
   const [selectedIndex, setSelectedIndex] = useState(1);
   const [data1, setData] = useState<any>(data);
+
+  useEffect(()=>{
+    socket?.on("book-rating", (data:any) => {
+      console.log("socket data",data);
+      data1.map((book:any)=>{
+        if(book.id === data.book._id){
+          console.log("book",book)
+          book.ratings = data.ratings;
+        }
+      })
+
+    });
+  },[socket])
 
   const getAll = async () => {
     try {

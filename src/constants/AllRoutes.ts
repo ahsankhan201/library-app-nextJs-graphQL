@@ -1,3 +1,7 @@
+import Cookies from "js-cookie";
+
+const role:any=Cookies.get('user')
+const userRole=role?.role;
 const AllRoutes = [
   {
     route: "/",
@@ -7,6 +11,7 @@ const AllRoutes = [
     route: "/user/viewBooks",
     name: "MyBooks",
   },
+
   {
     route: "/newBook",
     name: "Add Book",

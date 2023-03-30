@@ -10,7 +10,6 @@ import {
 export default function EditBook({ userData,setShowModal }: any) {
   const router = useRouter();
   const [fileChange, setFileChange] = useState(false);
-  console.log("userdarta", userData);
   const [book, setBook] = useState({
     title: userData.title,
     author: userData.author,
@@ -45,7 +44,6 @@ export default function EditBook({ userData,setShowModal }: any) {
         },
       });
       if(data){
-        // close the modal
         setShowModal(false);
         router.push("/")
       }

@@ -84,20 +84,28 @@ query Query($status: String!) {
 `
 
 export const Login_User_Books = gql`
-query Query {
+query Shelves {
   shelves {
-    user_id
-    status
-    book_id
     _id
-    ratings {
-      _id
-      book_id
-      comment
-      stars
-      user_id
-    }
     average_rating
+    book_id
+    status
+    user_id
+    ratings {
+      user_id
+      stars
+      comment
+      book_id
+      _id
+    }
+    book {
+      _id
+      author
+      average_rating
+      cover_Image
+      date
+      title
+    }
   }
 }
 
