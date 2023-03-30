@@ -18,6 +18,7 @@ const Ratings = ({ user }: any) => {
   return (
     <>
     
+      <div className="flex justify-center">
       <ReactStars
         edit={router.pathname === "/" ? false : true}
         onChange={(event: any) => {
@@ -29,6 +30,7 @@ const Ratings = ({ user }: any) => {
         color1={"grey"}
         value={user?.average_rating ? user?.average_rating : 0}
       />
+      </div>
     </>
   );
 };

@@ -124,7 +124,9 @@ export default function Home({ socket }: any) {
 
                       <td className="text-center">{user?.date}</td>
                       <td className="text-center">
+                        <div className="flex justify-around">
                         <select
+                        className="border rounded"
                           onChange={(event) => Set_TheSelve(event, user?._id)}
                         >
                           <option value="Want to read">Want to read</option>
@@ -144,6 +146,7 @@ export default function Home({ socket }: any) {
                             setShowModal={setShowModal}
                           />
                         </Modal>
+                        </div>
                       </td>
                     </tr>
                   );

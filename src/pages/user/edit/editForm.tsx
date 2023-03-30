@@ -44,9 +44,9 @@ const editForm = ({ userid }: Props) => {
     <div className="w-4/5">
       <div className="p-4 bg-white rounded-lg">
         <div className="flex border-b flex-row space-between">
-          {/* <div>
+          <div>
         <img className="w-52" src={`${Get_Image_Url}${bookDetail?.cover_Image}`} alt="" />
-      </div> */}
+      </div>
           <div className="text-black px-4">
             <h2 className="text-base font-bold mb-2">{bookDetail?.title}</h2>
             <p className="mb-2 text-left">by {bookDetail?.author}</p>

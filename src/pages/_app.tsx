@@ -22,6 +22,7 @@ function MyApp({ Component, pageProps, socket }: MyAppProps) {
 
   return (
     <>
+     <div className="pt-20"> 
       {Cookies.get("user") ? <Navbar /> : null}
       <I18nextProvider i18n={i18n}>
         <NextUIProvider>
@@ -33,6 +34,7 @@ function MyApp({ Component, pageProps, socket }: MyAppProps) {
           </ProtectedRoutes>
         </NextUIProvider>
       </I18nextProvider>
+      </div>
     </>
   );
 }

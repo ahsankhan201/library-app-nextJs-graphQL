@@ -95,8 +95,10 @@ export default function books({ data1, socket,setData }: Props) {
               <td className="text-center">
                 <Ratings user={user} />
               </td>
-              <td>
-                <select
+              <td className="text-center">
+                <div className="flex justify-around">
+              <select
+              className="border rounded mr-2"
                   value={user.status}
                   onChange={(event) => Set_TheSelve(event, user?.book_id)}
                 >
@@ -104,10 +106,7 @@ export default function books({ data1, socket,setData }: Props) {
                   <option value="Reading">Reading</option>
                   <option value="Read">Read</option>
                 </select>
-              </td>
-
-              <td className="text-center">
-                <div>
+                  <div>
                   {user?.status == "Read" ? (
                     <h2 onClick={handleEditClick}>Review</h2>
                   ) : null}
@@ -124,6 +123,7 @@ export default function books({ data1, socket,setData }: Props) {
                   <Link href={`/detail/${user?.book_id}`}>
                     <h2>View</h2>
                   </Link>
+                  </div>
                 </div>
               </td>
             </tr>

@@ -8,7 +8,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 39px 21px;
+  padding: 0px 21px;
   box-sizing: border-box;
   height: 50px;
   margin: 0 auto;
@@ -23,6 +23,7 @@ nav ul {
 
 nav ul li {
   margin-right: 20px;
+  margin-bottom: 0px;
 }
 
 nav ul li:last-child {

@@ -54,7 +54,7 @@ export default function Register() {
               <input
                 type="email"
                 id="email"
-                className="w-full border border-gray-300 p-2 rounded-3xl"
+                className="w-full h-9 border border-gray-300 p-2 rounded-3xl"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -70,7 +70,7 @@ export default function Register() {
               <input
                 type="text"
                 id="name"
-                className="w-full border border-gray-300 p-2 rounded-3xl"
+                className="w-full h-9 border border-gray-300 p-2 rounded-3xl"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -86,7 +86,7 @@ export default function Register() {
               <input
                 type="password"
                 id="password"
-                className="w-full border border-gray-300 p-2 rounded-3xl"
+                className="w-full h-9 border border-gray-300 p-2 rounded-3xl"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -107,7 +107,7 @@ export default function Register() {
           </p>
           <div
             id="legalTextRow"
-            className="a-row a-spacing-top-medium a-size-small"
+            className="a-row mt-2 a-spacing-top-medium a-size-small"
           >
             By creating an account, you agree to the Goodreads{" "}
             <a href="https://www.goodreads.com/about/terms">Terms of Service</a>{" "}

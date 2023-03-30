@@ -54,7 +54,7 @@ const ViewBooks = ({ data, socket }: any) => {
         <Tabs defaultIndex={1} style={{ marginTop: "40px" }}>
           <TabList className="flex border-b border-gray-200">
             <Tab
-              className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
+              className={`py-4 cursor-pointer px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
                 selectedIndex === 0 ? "bg-gray-200" : ""
               }`}
               onClick={() => {
@@ -65,8 +65,8 @@ const ViewBooks = ({ data, socket }: any) => {
               All
             </Tab>
             <Tab
-              className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
-                selectedIndex === 1 ? "bg-gray-200" : ""
+              className={`py-4 px-6 cursor-pointer text-gray-600 hover:text-gray-800 focus:outline-none ${
+                selectedIndex === 1 ? "bg-gray-200 font-bold" : ""
               }`}
               onClick={() => {
                 Shelve_By_Status_Record("Want to Read");
@@ -76,8 +76,8 @@ const ViewBooks = ({ data, socket }: any) => {
               Want to Read
             </Tab>
             <Tab
-              className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
-                selectedIndex === 2 ? "bg-gray-200" : ""
+              className={`py-4 px-6 cursor-pointer text-gray-600 hover:text-gray-800 focus:outline-none ${
+                selectedIndex === 2 ? "bg-gray-200 font-bold" : ""
               }`}
               onClick={() => {
                 Shelve_By_Status_Record("Reading");
@@ -87,8 +87,8 @@ const ViewBooks = ({ data, socket }: any) => {
               Reading
             </Tab>
             <Tab
-              className={`py-4 px-6 font-semibold text-gray-600 hover:text-gray-800 focus:outline-none ${
-                selectedIndex === 3 ? "bg-gray-200" : ""
+              className={`py-4 px-6 cursor-pointer text-gray-600 hover:text-gray-800 focus:outline-none ${
+                selectedIndex === 3 ? "bg-gray-200 font-bold" : ""
               }`}
               onClick={() => {
                 Shelve_By_Status_Record("Read");

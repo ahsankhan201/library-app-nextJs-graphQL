@@ -16,7 +16,9 @@
   },
   "moduleDirectories": [
     "node_modules",
-    "src"
+    "src",
+    "src/components",
+    "src/pages"
   ],
   "dependencies": {
     "@apollo/client": "^3.7.10",
